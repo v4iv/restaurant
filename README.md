@@ -1,6 +1,6 @@
-# Restaurant
+# Cloud Kitchen
 
-An online restaurant app.
+A cloud kitchen app.
 
 ## Powered By
 

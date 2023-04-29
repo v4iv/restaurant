@@ -2,6 +2,7 @@ import React from 'react'
 import {useForm} from 'react-hook-form'
 import {Box, Button, Divider, Heading, TextField} from 'gestalt'
 import {useSignUpMutation} from '../../../services/auth.service'
+import {useLocation} from 'wouter'
 
 type FormValues = {
   firstName: string
@@ -12,6 +13,8 @@ type FormValues = {
 }
 
 const SignUpForm: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setLocation] = useLocation()
   const {
     register,
     handleSubmit,
@@ -34,6 +37,7 @@ const SignUpForm: React.FC = () => {
         isManager: false,
       }).unwrap()
       // sign up successful
+      setLocation('/sign-in')
     } catch (err) {
       console.error('Sign Up Error: ', err)
     }

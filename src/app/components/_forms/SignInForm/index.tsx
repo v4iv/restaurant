@@ -10,8 +10,8 @@ type FormValues = {
 }
 
 const SignInForm: React.FC = () => {
-  // @ts-ignore
-  const [location, setLocation] = useLocation()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setLocation] = useLocation()
   const {
     register,
     handleSubmit,

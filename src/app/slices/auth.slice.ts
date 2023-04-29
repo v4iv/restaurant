@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {User} from '../types/user.types'
 import {authApi} from '../services/auth.service'
-import {RootState} from '../store'
 
 interface AuthState {
   user: User | null
@@ -26,10 +25,6 @@ const authSlice = createSlice({
     clearError: (state) => {
       state.error = null
     },
-    signOut: (state) => {
-      state.user = null
-      localStorage.removeItem('token')
-    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -47,10 +42,15 @@ const authSlice = createSlice({
         localStorage.setItem('token', payload.token)
       },
     )
+    builder.addMatcher(authApi.endpoints.signOut.matchFulfilled, (state) => {
+      state.user = null
+      state.error = null
+      localStorage.removeItem('token')
+    })
   },
 })
 
-export const {setUser, setError, clearError, signOut} = authSlice.actions
+export const {setUser, setError, clearError} = authSlice.actions
 
-export const selectIsAuthenticated = (state: RootState) => !!state.auth.user
+export const selectIsAuthenticated = () => !!localStorage.getItem('token')
 export default authSlice.reducer

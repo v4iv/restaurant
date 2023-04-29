@@ -5,7 +5,6 @@ export interface Product {
   image: string
   isVegetarian: boolean
   price: number
-  discount?: number
   isAvailable: boolean
   quantity: number
 }

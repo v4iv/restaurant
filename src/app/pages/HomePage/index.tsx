@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
 
       <Box paddingY={2}>
         {!isError &&
-          data?.map((product) => (
+          data?.products?.map((product) => (
             <ProductCard
               key={product.id}
               product={product}

@@ -24,7 +24,15 @@ export const authApi = createApi({
         body: {email, password},
       }),
     }),
+    signOut: builder.mutation<any, void>({
+      query: () => ({
+        url: '/signout',
+        method: 'GET',
+        headers: {authorization: `Bearer ${localStorage.getItem('token')}`},
+      }),
+    }),
   }),
 })
 
-export const {useSignUpMutation, useSignInMutation} = authApi
+export const {useSignUpMutation, useSignInMutation, useSignOutMutation} =
+  authApi

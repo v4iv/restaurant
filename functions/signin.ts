@@ -46,7 +46,9 @@ const handler: Handler = async (
     )
 
     // Get the user document from the Login result
-    const userDocument: UserDocument = result.instance
+    const userDocument: UserDocument = await client.query(
+      q.Get(result.instance),
+    )
 
     // Return the token and user document as a response
     return {
@@ -54,6 +56,7 @@ const handler: Handler = async (
       body: JSON.stringify({
         token: result.secret,
         user: {
+          id: userDocument.ref.id,
           firstName: userDocument.data.firstName,
           lastName: userDocument.data.lastName,
           email: userDocument.data.email,

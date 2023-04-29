@@ -1,8 +1,7 @@
 import React from 'react'
 import {useLocation} from 'wouter'
 import {Dropdown} from 'gestalt'
-import {useAppDispatch} from '../../../hooks/useAppDispatch'
-import {signOut} from '../../../slices/auth.slice'
+import {useSignOutMutation} from '../../../services/auth.service'
 
 interface MenuDropDownProps {
   toggleMenu: () => void
@@ -13,7 +12,8 @@ const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
   const {toggleMenu, menuAnchorRef} = props
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setLocation] = useLocation()
-  const dispatch = useAppDispatch()
+
+  const [signOutMutation] = useSignOutMutation()
 
   return (
     <Dropdown
@@ -50,8 +50,7 @@ const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
       />
       <Dropdown.Item
         onSelect={() => {
-          setLocation('/')
-          dispatch(signOut)
+          signOutMutation()
         }}
         option={{
           value: 'sign-out',

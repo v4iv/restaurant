@@ -12,8 +12,6 @@ import CartOverlay from './CartOverlay'
 const NavBar: React.FC = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
 
-  console.log('Is Authenticated: ', isAuthenticated)
-
   if (isAuthenticated) {
     return <AuthenticatedNavBar />
   } else {

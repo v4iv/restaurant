@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {Suspense} from 'react'
 import {useLocation} from 'wouter'
 import {useForm} from 'react-hook-form'
-import {Box, Button, Divider, Heading, TextField} from 'gestalt'
+import {Box, Button, Divider, Heading, Spinner, TextField} from 'gestalt'
 import {useSignInMutation} from '../../../services/auth.service.ts'
+import ErrorToast from '../../ErrorToast'
+import {useTranslation} from 'react-i18next'
 
 type FormValues = {
   email: string
@@ -10,6 +12,7 @@ type FormValues = {
 }
 
 const SignInForm: React.FC = () => {
+  const [t] = useTranslation(['common'])
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setLocation] = useLocation()
   const {
@@ -19,7 +22,7 @@ const SignInForm: React.FC = () => {
     setValue,
   } = useForm<FormValues>()
 
-  const [signInMutation, {isLoading}] = useSignInMutation()
+  const [signInMutation, {isLoading, isError, error}] = useSignInMutation()
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -56,6 +59,23 @@ const SignInForm: React.FC = () => {
           </Box>
 
           <Divider />
+
+          {isError && (
+            <Suspense
+              fallback={
+                <Box paddingY={6}>
+                  <Spinner accessibilityLabel={t('common:loading')} show />
+                </Box>
+              }
+            >
+              <ErrorToast
+                message={
+                  // @ts-ignore
+                  error?.data?.error || t('common:something-went-wrong')
+                }
+              />
+            </Suspense>
+          )}
 
           <Box paddingY={2}>
             <Box flex="grow" paddingX={3} paddingY={3}>

@@ -49,8 +49,8 @@ const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
         }}
       />
       <Dropdown.Item
-        onSelect={() => {
-          signOutMutation()
+        onSelect={async () => {
+          await signOutMutation()
         }}
         option={{
           value: 'sign-out',

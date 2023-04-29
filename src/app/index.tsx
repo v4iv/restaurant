@@ -12,6 +12,7 @@ import ThemeContext from './contexts/theme.context'
 import HomePage from './pages/HomePage'
 import NavBar from './components/NavBar'
 import SignInPage from './pages/SignInPage'
+import SignUpPage from './pages/SignUpPage'
 
 const App: React.FC = () => {
   const {t} = useTranslation(['common'])
@@ -63,6 +64,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/sign-in" component={SignInPage}>
                   Sign In Page
+                </Route>
+                <Route path="/sign-up" component={SignUpPage}>
+                  Sign Up Page
                 </Route>
               </Suspense>
             </Container>

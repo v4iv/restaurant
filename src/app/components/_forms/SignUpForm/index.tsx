@@ -1,13 +1,13 @@
 import React from 'react'
 import {useForm} from 'react-hook-form'
 import {Box, Button, Divider, Heading, TextField} from 'gestalt'
-import {useSignUpMutation} from '../../../services/auth.service.ts'
+import {useSignUpMutation} from '../../../services/auth.service'
 
 type FormValues = {
   firstName: string
   lastName: string
   email: string
-  phoneNumber: string
+  phone: string
   password: string
 }
 
@@ -27,8 +27,11 @@ const SignUpForm: React.FC = () => {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        phoneNumber: data.phoneNumber,
+        phone: data.phone,
         password: data.password,
+        isActive: true,
+        isVerified: true,
+        isManager: false,
       }).unwrap()
       // sign up successful
     } catch (err) {
@@ -39,7 +42,7 @@ const SignUpForm: React.FC = () => {
   const firstName = register('firstName', {required: true})
   const lastName = register('lastName', {required: true})
   const email = register('email', {required: true})
-  const phoneNumber = register('phoneNumber', {required: true})
+  const phone = register('phone', {required: true})
   const password = register('password', {required: true})
 
   return (
@@ -120,13 +123,13 @@ const SignUpForm: React.FC = () => {
 
           <Box flex="grow" paddingX={3} paddingY={3}>
             <TextField
-              id="phoneNumber"
-              name={phoneNumber.name}
+              id="phone"
+              name={phone.name}
               type="tel"
               placeholder="Phone Number"
-              ref={phoneNumber.ref}
-              errorMessage={errors.phoneNumber?.message}
-              onChange={({value}) => setValue('phoneNumber', value)}
+              ref={phone.ref}
+              errorMessage={errors.phone?.message}
+              onChange={({value}) => setValue('phone', value)}
             />
           </Box>
 

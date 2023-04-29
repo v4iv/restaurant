@@ -126,3 +126,4 @@ src/reportWebVitals.ts
 .prettierrc
 
 .netlify/
+netlify.toml

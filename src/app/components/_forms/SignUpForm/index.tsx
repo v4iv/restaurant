@@ -1,10 +1,11 @@
-import React, {Suspense} from 'react'
+import React, {lazy, Suspense} from 'react'
+import {useTranslation} from 'react-i18next'
+import {useLocation} from 'wouter'
 import {useForm} from 'react-hook-form'
 import {Box, Button, Divider, Heading, Spinner, TextField} from 'gestalt'
 import {useSignUpMutation} from '../../../services/auth.service'
-import {useLocation} from 'wouter'
-import ErrorToast from '../../ErrorToast'
-import {useTranslation} from 'react-i18next'
+
+const ErrorToast = lazy(() => import('../../ErrorToast'))
 
 type FormValues = {
   firstName: string

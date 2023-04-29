@@ -1,18 +1,20 @@
-import React, {Suspense, useEffect, useState} from 'react'
+import React, {lazy, Suspense, useEffect, useState} from 'react'
 import {Route} from 'wouter'
 import {useTranslation} from 'react-i18next'
 import {
   Box,
-  Container,
   ColorSchemeProvider,
   ColorSchemeProviderProps,
+  Container,
   Spinner,
 } from 'gestalt'
 import ThemeContext from './contexts/theme.context'
-import HomePage from './pages/HomePage'
 import NavBar from './components/NavBar'
-import SignInPage from './pages/SignInPage'
-import SignUpPage from './pages/SignUpPage'
+
+// Pages
+const HomePage = lazy(() => import('./pages/HomePage'))
+const SignUpPage = lazy(() => import('./pages/SignUpPage'))
+const SignInPage = lazy(() => import('./pages/SignInPage'))
 
 const App: React.FC = () => {
   const {t} = useTranslation(['common'])

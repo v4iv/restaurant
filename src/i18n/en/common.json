@@ -1,0 +1,45 @@
+{
+  "url": "https://flamekitchen.netlify.app",
+  "kitchen": "Flame Kitchen",
+  "description": "A Flaming Restaurant",
+  "home": "Home",
+  "light-mode": "Light Mode",
+  "dark-mode": "Dark Mode",
+  "toggle-color-scheme": "Toggle color scheme: light / dark mode views",
+  "cart": "Cart",
+  "profile-options": "Profile Options",
+  "loading": "Loading...",
+  "checkout": "Checkout",
+  "search": {
+    "accessibilityLabel": "Search Box",
+    "accessibilityClearButtonLabel": "Clear Search Box",
+    "placeholder": "Search & Explore..."
+  },
+  "shareOptions": {
+    "share": "Share",
+    "share-twitter": "Share on Twitter",
+    "share-facebook": "Share on Facebook",
+    "share-whatsapp": "Share on WhatsApp",
+    "share-reddit": "Share on Reddit",
+    "share-email": "Share via Email"
+  },
+  "errors": {
+    "page-not-found": "Error: Page not found",
+    "something-went-wrong": "Oops! Something went wrong. Please try again later.",
+    "bad-request": "Bad Request!",
+    "unauthorized": "Unauthorized!",
+    "forbidden": "Forbidden!",
+    "not-found": "Not Found!",
+    "method-not-allowed": "Method Not Allowed!",
+    "internal-server-error": "Internal Server Error!",
+    "no-records-found": "Sorry, No Records Found!"
+  },
+  "sort": "Sort",
+  "sort-by": "Sort By",
+  "sortOptions": {
+    "lowest-number-first": "Lowest Number (First)",
+    "highest-number-first": "Highest Number (First)",
+    "z-a": "Z - A",
+    "a-z": "A - Z"
+  }
+}

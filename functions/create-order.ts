@@ -57,7 +57,9 @@ const handler: Handler = async (
     const client = new Client({secret: faunaSecret})
 
     // Get the user document from the bearer token
-    const userDocument: UserDocument = await client.query(q.Get(q.Identity()))
+    const userDocument: UserDocument = await client.query(
+      q.Get(q.CurrentIdentity()),
+    )
 
     const addressDocument: AddressDocument = await client.query(
       q.Get(q.Ref(q.Collection('addresses'), address)),
@@ -70,18 +72,13 @@ const handler: Handler = async (
       price: product.price,
     }))
 
-    console.log('Products Formatted', productsFormatted)
-    console.log('User ID', userDocument.ref)
-    console.log('Address ID', addressDocument.ref)
-    console.log('Special Instructions', specialInstructions)
-
     // Call the submit_order FQL function with the necessary arguments
     const result: any = await client.query(
       q.Call(
         q.Function('submit_order'),
         productsFormatted,
-        userDocument.ref,
-        addressDocument.ref,
+        userDocument.ref.id,
+        addressDocument.ref.id,
         specialInstructions,
       ),
     )
@@ -104,3 +101,5 @@ const handler: Handler = async (
     }
   }
 }
+
+export {handler}

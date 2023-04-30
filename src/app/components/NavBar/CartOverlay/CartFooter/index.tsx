@@ -1,17 +1,25 @@
 import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {Box, Button, Flex, Heading, OverlayPanel, Text} from 'gestalt'
-import {useAppSelector} from '../../../../hooks/useAppSelector.ts'
-import {selectCart} from '../../../../slices/cart.slice.ts'
+import {useAppSelector} from '../../../../hooks/useAppSelector'
+import {
+  selectCartAddress,
+  selectCartProducts,
+} from '../../../../slices/cart.slice'
 
 interface ICartFooterProps {
   total: number
+  handleCheckout: () => void
+  isLoading: boolean
+  isError: boolean
+  error: any
 }
 
 const CartFooter: React.FC<ICartFooterProps> = (props) => {
   const [t] = useTranslation(['common'])
-  const {total} = props
-  const cart = useAppSelector(selectCart)
+  const {total, handleCheckout, isError, isLoading} = props
+  const cartItems = useAppSelector(selectCartProducts)
+  const selectedAddress = useAppSelector(selectCartAddress)
 
   return (
     /* @ts-ignore */
@@ -29,8 +37,14 @@ const CartFooter: React.FC<ICartFooterProps> = (props) => {
             </Box>
             <Button
               color="red"
-              text={t('common:checkout')}
-              onClick={() => alert(`Cart: ${JSON.stringify(cart)}`)}
+              text={isLoading ? 'Placing Order...' : t('common:checkout')}
+              disabled={isLoading || !selectedAddress || !cartItems.length}
+              onClick={() => {
+                handleCheckout()
+                if (!isError) {
+                  onDismissStart()
+                }
+              }}
             />
           </Flex>
         )

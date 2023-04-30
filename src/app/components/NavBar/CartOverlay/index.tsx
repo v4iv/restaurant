@@ -14,6 +14,8 @@ import {useAppDispatch} from '../../../hooks/useAppDispatch'
 import {useAppSelector} from '../../../hooks/useAppSelector'
 import {useGetAddressesQuery} from '../../../services/address.service'
 import {
+  clearCart,
+  selectCart,
   selectCartAddress,
   selectCartProducts,
   selectSpecialInstruction,
@@ -22,6 +24,7 @@ import {
 } from '../../../slices/cart.slice'
 import CartItem from './CartItem'
 import CartFooter from './CartFooter'
+import {useCreateOrderMutation} from '../../../services/order.service'
 
 interface CartOverlayProps {
   toggleShowCart: () => void
@@ -31,6 +34,7 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
   const [t] = useTranslation(['common'])
   const dispatch = useAppDispatch()
   const {toggleShowCart} = props
+  const orderData = useAppSelector(selectCart)
   const cartItems = useAppSelector(selectCartProducts)
   const HEADER_ZINDEX = new FixedZIndex(10)
   const sheetZIndex = new CompositeZIndex([HEADER_ZINDEX])
@@ -38,6 +42,10 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
   const specialInstructions = useAppSelector(selectSpecialInstruction)
 
   const {data, isLoading, isError} = useGetAddressesQuery()
+  const [
+    createOrderMutation,
+    {isLoading: isCreatingOrder, isError: isOrderError, error: orderError},
+  ] = useCreateOrderMutation()
 
   const addressOptions =
     !isLoading &&
@@ -58,6 +66,17 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
       ? cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
       : 0
 
+  const handleCheckout = async () => {
+    try {
+      await createOrderMutation(orderData).unwrap()
+      // Clear the cart and show a success message
+      dispatch(clearCart())
+      alert('Order placed successfully!')
+    } catch (error) {
+      alert('Failed to create order')
+    }
+  }
+
   return (
     <Layer zIndex={sheetZIndex}>
       <OverlayPanel
@@ -65,7 +84,15 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
         accessibilityLabel="Audience list creation for new campaign"
         heading={t('common:cart') || ''}
         onDismiss={toggleShowCart}
-        footer={<CartFooter total={total} />}
+        footer={
+          <CartFooter
+            total={total}
+            handleCheckout={handleCheckout}
+            isLoading={isCreatingOrder}
+            isError={isOrderError}
+            error={orderError}
+          />
+        }
         size="sm"
       >
         <Box padding={2}>
@@ -89,7 +116,13 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
             <SelectList
               id="address"
               name="Address"
-              placeholder={isLoading ? 'Loading...' : 'Select Address'}
+              placeholder={
+                isLoading
+                  ? 'Loading...'
+                  : isError
+                  ? 'Sign In'
+                  : 'Select Address'
+              }
               label="Address"
               onChange={({value}) => dispatch(setAddress(value))}
               value={useAppSelector(selectCartAddress)}

@@ -70,14 +70,20 @@ const handler: Handler = async (
       price: product.price,
     }))
 
+    console.log('Products Formatted', productsFormatted)
+    console.log('User ID', userDocument.ref)
+    console.log('Address ID', addressDocument.ref)
+    console.log('Special Instructions', specialInstructions)
+
     // Call the submit_order FQL function with the necessary arguments
     const result: any = await client.query(
-      q.Call(q.Function('submit_order'), [
+      q.Call(
+        q.Function('submit_order'),
         productsFormatted,
         userDocument.ref,
         addressDocument.ref,
         specialInstructions,
-      ]),
+      ),
     )
 
     return {
@@ -88,6 +94,7 @@ const handler: Handler = async (
       }),
     }
   } catch (error) {
+    console.error(error)
     return {
       statusCode: 400,
       body: JSON.stringify({

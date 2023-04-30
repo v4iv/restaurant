@@ -39,12 +39,20 @@ const authSlice = createSlice({
       (state, {payload}) => {
         state.user = payload.user
         state.error = null
+        localStorage.setItem('user', JSON.stringify(payload.user))
         localStorage.setItem('token', payload.token)
       },
     )
     builder.addMatcher(authApi.endpoints.signOut.matchFulfilled, (state) => {
       state.user = null
       state.error = null
+      localStorage.removeItem('user')
+      localStorage.removeItem('token')
+    })
+    builder.addMatcher(authApi.endpoints.signOut.matchRejected, (state) => {
+      state.user = null
+      state.error = null
+      localStorage.removeItem('user')
       localStorage.removeItem('token')
     })
   },

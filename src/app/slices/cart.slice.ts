@@ -3,15 +3,15 @@ import {RootState} from '../store'
 import {CartItem} from '../types/cart.types'
 
 interface CartState {
-  items: CartItem[]
-  shippingAddress: string
-  billingAddress: string
+  products: CartItem[]
+  address: string | undefined
+  specialInstructions: string
 }
 
 const initialState: CartState = {
-  items: [],
-  shippingAddress: '',
-  billingAddress: '',
+  products: [],
+  address: undefined,
+  specialInstructions: '',
 }
 
 export const cartSlice = createSlice({
@@ -19,44 +19,54 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      state.items.push(action.payload)
+      state.products.push(action.payload)
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload)
+      state.products = state.products.filter(
+        (product) => product.id !== action.payload,
+      )
     },
     clearCart: (state) => {
-      state.items = []
+      state.products = []
     },
     increaseQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((item) => item.id === action.payload)
-      if (item) {
-        item.quantity += 1
+      const product = state.products.find(
+        (product) => product.id === action.payload,
+      )
+      if (product) {
+        product.quantity += 1
       }
     },
     decreaseQuantity: (state, action: PayloadAction<string>) => {
-      const item = state.items.find((item) => item.id === action.payload)
-      if (item) {
-        if (item.quantity === 1) {
-          state.items = state.items.filter((item) => item.id !== action.payload)
+      const product = state.products.find(
+        (product) => product.id === action.payload,
+      )
+      if (product) {
+        if (product.quantity === 1) {
+          state.products = state.products.filter(
+            (item) => item.id !== action.payload,
+          )
         } else {
-          item.quantity -= 1
+          product.quantity -= 1
         }
       }
     },
-    setShippingAddress: (state, action: PayloadAction<string>) => {
-      state.shippingAddress = action.payload
+    setAddress(state, action: PayloadAction<string>) {
+      state.address = action.payload
     },
-    setBillingAddress: (state, action: PayloadAction<string>) => {
-      state.billingAddress = action.payload
+    setSpecialInstructions(state, action: PayloadAction<string>) {
+      state.specialInstructions = action.payload
     },
   },
 })
 
-export const selectCartItems = (state: RootState) => state.cart.items
-export const selectShippingAddress = (state: RootState) =>
-  state.cart.shippingAddress
-export const selectBillingAddress = (state: RootState) =>
-  state.cart.billingAddress
+export const selectCart = (state: RootState) => state.cart
+
+export const selectCartProducts = (state: RootState) => state.cart.products
+export const selectCartAddress = (state: RootState) => state.cart.address
+
+export const selectSpecialInstruction = (state: RootState) =>
+  state.cart.specialInstructions
 
 export const {
   addToCart,
@@ -64,8 +74,8 @@ export const {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
-  setShippingAddress,
-  setBillingAddress,
+  setSpecialInstructions,
+  setAddress,
 } = cartSlice.actions
 
 export default cartSlice.reducer

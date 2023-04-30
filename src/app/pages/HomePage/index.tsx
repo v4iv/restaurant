@@ -2,7 +2,7 @@ import React, {lazy, Suspense} from 'react'
 import {useTranslation} from 'react-i18next'
 import {Box, Spinner} from 'gestalt'
 import {useAppSelector} from '../../hooks/useAppSelector'
-import {selectCartItems} from '../../slices/cart.slice'
+import {selectCartProducts} from '../../slices/cart.slice'
 import {useGetProductsQuery} from '../../services/products.service.ts'
 import SEO from '../../components/SEO'
 import ProductCard from '../../components/ProductCard'
@@ -11,7 +11,7 @@ const ErrorToast = lazy(() => import('../../components/ErrorToast'))
 
 const HomePage: React.FC = () => {
   const [t] = useTranslation(['common'])
-  const cartItems = useAppSelector(selectCartItems)
+  const cartItems = useAppSelector(selectCartProducts)
   const {data, isError, isLoading} = useGetProductsQuery()
 
   const getCartQuantity = (productId: string) => {

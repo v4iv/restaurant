@@ -4,6 +4,7 @@ import cartReducer from '../slices/cart.slice'
 import {authApi} from '../services/auth.service'
 import {productApi} from '../services/products.service'
 import {orderApi} from '../services/order.service'
+import {addressApi} from '../services/address.service'
 
 export const store = configureStore({
   reducer: {
@@ -12,12 +13,14 @@ export const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
+    [addressApi.reducerPath]: addressApi.reducer,
   },
   middleware: (gDM) =>
     gDM().concat(
       authApi.middleware,
       orderApi.middleware,
       productApi.middleware,
+      addressApi.middleware,
     ),
 })
 

@@ -19,7 +19,6 @@ interface ProductCardProps {
     isAvailable: boolean
     quantity: number
     price: number
-    discount?: number
   }
   getCartQuantity: (productId: string) => number
 }
@@ -36,7 +35,6 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
     quantity,
     isAvailable,
     isVegetarian,
-    discount,
   } = product
 
   return (
@@ -141,7 +139,6 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                     color="red"
                     onClick={() => {
                       const newCartItem: CartItem = {
-                        discount: discount,
                         id: id,
                         name: name,
                         price: price,

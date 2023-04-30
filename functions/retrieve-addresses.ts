@@ -30,6 +30,10 @@ interface AddressDocument {
   }
 }
 
+interface IAddresses {
+  data: AddressDocument[]
+}
+
 const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext,
@@ -54,23 +58,26 @@ const handler: Handler = async (
     // Connect to FaunaDB
     const client = new Client({secret: faunaSecret})
 
-    const userDocument: UserDocument = await client.query(q.Get(q.Identity()))
+    const userDocument: UserDocument = await client.query(
+      q.Get(q.CurrentIdentity()),
+    )
 
-    const addresses: AddressDocument[] = await client.query(
+    const addresses: IAddresses = await client.query(
       q.Map(
         q.Paginate(
           q.Match(
             q.Index('addresses_by_customer'),
-            q.Ref(q.Collection('users'), userDocument.ref),
+            q.Ref(q.Collection('users'), userDocument.ref.id),
           ),
         ),
         q.Lambda('addressRef', q.Get(q.Var('addressRef'))),
       ),
     )
+
     return {
       statusCode: 200,
       body: JSON.stringify({
-        addresses: addresses.map((address) => ({
+        addresses: addresses.data.map((address) => ({
           id: address.ref.id,
           name: address.data.name,
           addressLineOne: address.data.addressLineOne,
@@ -84,6 +91,7 @@ const handler: Handler = async (
       }),
     }
   } catch (error) {
+    console.error(error)
     // Handle any errors that occur
     return {
       statusCode: 500,

@@ -4,7 +4,7 @@ export interface Address {
   addressLineOne: string
   addressLineTwo?: string
   landmark?: string
-  city: string
+  area: string
   phone: string
-  gpsLocation?: string
+  location?: string
 }

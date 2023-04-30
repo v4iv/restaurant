@@ -1,6 +1,8 @@
 import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {Box, Button, Flex, Heading, OverlayPanel, Text} from 'gestalt'
+import {useAppSelector} from '../../../../hooks/useAppSelector.ts'
+import {selectCart} from '../../../../slices/cart.slice.ts'
 
 interface ICartFooterProps {
   total: number
@@ -9,6 +11,7 @@ interface ICartFooterProps {
 const CartFooter: React.FC<ICartFooterProps> = (props) => {
   const [t] = useTranslation(['common'])
   const {total} = props
+  const cart = useAppSelector(selectCart)
 
   return (
     /* @ts-ignore */
@@ -27,7 +30,7 @@ const CartFooter: React.FC<ICartFooterProps> = (props) => {
             <Button
               color="red"
               text={t('common:checkout')}
-              onClick={onDismissStart}
+              onClick={() => alert(`Cart: ${JSON.stringify(cart)}`)}
             />
           </Flex>
         )

@@ -9,7 +9,7 @@ export const productApi = createApi({
   tagTypes: ['Products'],
   endpoints: (build) => ({
     getProducts: build.query<ProductList, void>({
-      query: () => '/retrieve-all-products',
+      query: () => '/retrieve-products',
       // Provides a list of `products` by `id`.
       // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
       // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Products` element was added.

@@ -1,6 +1,6 @@
-# Cloud Kitchen
+# Restaurant
 
-A cloud kitchen app.
+A cloud kitchen storefront app.
 
 ## Powered By
 
@@ -11,3 +11,4 @@ A cloud kitchen app.
 - Netlify Functions
 - FaunaDB
 - Gestalt Components
+- i18next

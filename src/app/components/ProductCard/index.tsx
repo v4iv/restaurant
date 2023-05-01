@@ -8,6 +8,7 @@ import {
   increaseQuantity,
   removeFromCart,
 } from '../../slices/cart.slice'
+import {useTranslation} from 'react-i18next'
 
 interface ProductCardProps {
   product: {
@@ -24,6 +25,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
+  const [t] = useTranslation(['homepage'])
   const dispatch = useAppDispatch()
   const {product, getCartQuantity} = props
   const {
@@ -60,7 +62,9 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
               <Box marginEnd={2}>
                 <Icon
                   accessibilityLabel={
-                    isVegetarian ? 'Vegetarian' : 'Non Vegetarian'
+                    isVegetarian
+                      ? t('homepage:vegetarian')
+                      : t('homepage:non-vegetarian')
                   }
                   icon="fill-opaque"
                   color={isVegetarian ? 'success' : 'error'}
@@ -109,13 +113,13 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                     <Box>
                       {getCartQuantity(id) > 1 ? (
                         <IconButton
-                          accessibilityLabel={'DECREASE QUANTITY'}
+                          accessibilityLabel={t('homepage:decrease-quantity')}
                           icon="dash"
                           onClick={() => dispatch(decreaseQuantity(id))}
                         />
                       ) : (
                         <IconButton
-                          accessibilityLabel={'Remove from cart'}
+                          accessibilityLabel={t('homepage:remove-from-cart')}
                           icon="trash-can"
                           onClick={() => dispatch(removeFromCart(id))}
                         />
@@ -126,7 +130,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                     </Box>
                     <Box>
                       <IconButton
-                        accessibilityLabel={'INCREASE QUANTITY'}
+                        accessibilityLabel={t('homepage:increase-quantity')}
                         icon="add"
                         onClick={() => dispatch(increaseQuantity(id))}
                       />
@@ -134,7 +138,11 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
                   </Box>
                 ) : (
                   <Button
-                    text={isAvailable ? 'ADD' : 'OUT OF STOCK'}
+                    text={
+                      isAvailable
+                        ? t('homepage:add')
+                        : t('homepage:out-of-stock')
+                    }
                     size="sm"
                     color="red"
                     onClick={() => {

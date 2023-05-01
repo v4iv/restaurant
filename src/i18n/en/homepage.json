@@ -1,0 +1,9 @@
+{
+  "vegetarian": "Vegetarian",
+  "non-vegetarian": "Non Vegetarian",
+  "add": "ADD",
+  "out-of-stock": "OUT OF STOCK",
+  "increase-quantity": "Increase Quantity",
+  "decrease-quantity": "Decrease Quantity",
+  "remove-from-cart": "Remove from Cart"
+}

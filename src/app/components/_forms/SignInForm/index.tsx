@@ -72,7 +72,7 @@ const SignInForm: React.FC = () => {
               <ErrorToast
                 message={
                   // @ts-ignore
-                  error?.data?.error || t('common:something-went-wrong')
+                  error?.data?.error || t('common:errors.something-went-wrong')
                 }
               />
             </Suspense>

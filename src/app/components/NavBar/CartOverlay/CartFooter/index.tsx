@@ -37,7 +37,11 @@ const CartFooter: React.FC<ICartFooterProps> = (props) => {
             </Box>
             <Button
               color="red"
-              text={isLoading ? 'Placing Order...' : t('common:checkout')}
+              text={
+                isLoading
+                  ? t('common:cart-overlay.placing-order')
+                  : t('common:checkout')
+              }
               disabled={isLoading || !selectedAddress || !cartItems.length}
               onClick={() => {
                 handleCheckout()

@@ -42,19 +42,20 @@ const UnauthenticatedNavBar = () => {
           accessibilityLabel={t('common:kitchen')}
           onClick={() => setLocation('/')}
         />
+
         <Flex.Item flex="grow" />
 
         <Button
-          accessibilityLabel="Sign In"
-          text="Sign In"
+          accessibilityLabel={t('common:sign-in') || 'Sign In'}
+          text={t('common:sign-in')}
           color="red"
           onClick={() => setLocation('/sign-in')}
         />
 
         <Button
-          accessibilityLabel="Sign Up"
+          accessibilityLabel={t('common:sign-up') || 'Sign Up'}
           color="red"
-          text="Sign Up"
+          text={t('common:sign-up')}
           onClick={() => setLocation('/sign-up')}
         />
       </Flex>

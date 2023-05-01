@@ -7,6 +7,7 @@ import {
   removeFromCart,
 } from '../../../../slices/cart.slice'
 import {CartItem} from '../../../../types/cart.types'
+import {useTranslation} from 'react-i18next'
 
 interface ICartItemProps {
   cartItem: CartItem
@@ -14,6 +15,7 @@ interface ICartItemProps {
 }
 
 const CartItem: React.FC<ICartItemProps> = (props) => {
+  const [t] = useTranslation(['common'])
   const dispatch = useAppDispatch()
   const {cartItem, getCartQuantity} = props
   const {id, name, quantity, price} = cartItem
@@ -45,14 +47,14 @@ const CartItem: React.FC<ICartItemProps> = (props) => {
           <Box>
             {getCartQuantity(id) > 1 ? (
               <IconButton
-                accessibilityLabel="DECREASE QUANTITY"
+                accessibilityLabel={t('common:decrease-quantity')}
                 icon="dash"
                 size="sm"
                 onClick={() => dispatch(decreaseQuantity(id))}
               />
             ) : (
               <IconButton
-                accessibilityLabel="Remove from cart"
+                accessibilityLabel={t('common:remove-from-cart')}
                 icon="trash-can"
                 size="sm"
                 onClick={() => dispatch(removeFromCart(id))}
@@ -64,7 +66,7 @@ const CartItem: React.FC<ICartItemProps> = (props) => {
           </Box>
           <Box>
             <IconButton
-              accessibilityLabel="INCREASE QUANTITY"
+              accessibilityLabel={t('common:increase-quantity')}
               icon="add"
               size="sm"
               onClick={() => dispatch(increaseQuantity(id))}

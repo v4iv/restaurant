@@ -15,6 +15,7 @@ import NavBar from './components/NavBar'
 const HomePage = lazy(() => import('./pages/HomePage'))
 const SignUpPage = lazy(() => import('./pages/SignUpPage'))
 const SignInPage = lazy(() => import('./pages/SignInPage'))
+const AddressPage = lazy(() => import('./pages/AddressPage'))
 
 const App: React.FC = () => {
   const {t} = useTranslation(['common'])
@@ -69,6 +70,9 @@ const App: React.FC = () => {
                 </Route>
                 <Route path="/sign-up" component={SignUpPage}>
                   Sign Up Page
+                </Route>
+                <Route path="/address" component={AddressPage}>
+                  Address Page
                 </Route>
               </Suspense>
             </Container>

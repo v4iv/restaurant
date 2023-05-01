@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {Box, Spinner} from 'gestalt'
 import {useAppSelector} from '../../hooks/useAppSelector'
 import {selectCartProducts} from '../../slices/cart.slice'
-import {useGetProductsQuery} from '../../services/products.service.ts'
+import {useGetProductsQuery} from '../../services/products.service'
 import SEO from '../../components/SEO'
 import ProductCard from '../../components/ProductCard'
 

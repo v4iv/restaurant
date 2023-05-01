@@ -80,8 +80,10 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
   return (
     <Layer zIndex={sheetZIndex}>
       <OverlayPanel
-        accessibilityDismissButtonLabel="Close audience creation overlay panel"
-        accessibilityLabel="Audience list creation for new campaign"
+        accessibilityDismissButtonLabel={
+          t('common:cart-overlay.close') || 'Close'
+        }
+        accessibilityLabel={t('common:cart')}
         heading={t('common:cart') || ''}
         onDismiss={toggleShowCart}
         footer={
@@ -108,7 +110,7 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
                 )
               })
             ) : (
-              <Text>There's nothing in the cart!</Text>
+              <Text>{t('common:cart-overlay.cart-empty')}</Text>
             )}
           </Box>
 
@@ -118,12 +120,12 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
               name="Address"
               placeholder={
                 isLoading
-                  ? 'Loading...'
+                  ? t('common:loading') || 'Loading'
                   : isError
-                  ? 'Sign In'
-                  : 'Select Address'
+                  ? t('common:sign-in') || 'Sign In'
+                  : t('common:select-address') || 'Select Address'
               }
-              label="Address"
+              label={t('common:address') || 'Address'}
               onChange={({value}) => dispatch(setAddress(value))}
               value={useAppSelector(selectCartAddress)}
               disabled={isLoading || isError}
@@ -137,11 +139,20 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
 
           <Box paddingY={2}>
             <TextArea
-              id="special_instructions"
+              id="specialInstructions"
               onChange={({value}) => dispatch(setSpecialInstructions(value))}
-              placeholder="any special instructions for preparation..."
-              helperText="We'll TRY to follow the instructions, but might not be able to depending on circumstances"
-              label="Special Instructions"
+              placeholder={
+                t('common:cart-overlay.special-instructions-placeholder') ||
+                'any special instructions for preparation...'
+              }
+              helperText={
+                t('common:cart-overlay.special-instructions-helper-text') ||
+                "We'll TRY to follow the instructions, but might not be able to depending on circumstances"
+              }
+              label={
+                t('common:cart-overlay.special-instructions') ||
+                'Special Instructions'
+              }
               value={specialInstructions}
             />
           </Box>

@@ -1,5 +1,5 @@
 {
-  "url": "https://flamekitchen.netlify.app",
+  "url": "https://cloudeat.netlify.app",
   "kitchen": "Flame Kitchen",
   "description": "A Flaming Restaurant",
   "home": "Home",
@@ -10,6 +10,27 @@
   "profile-options": "Profile Options",
   "loading": "Loading...",
   "checkout": "Checkout",
+  "sign-up": "Sign Up",
+  "sign-in": "Sign In",
+  "sign-out": "Sign Out",
+  "profile": "Profile",
+  "orders": "Orders",
+  "settings": "Settings",
+  "address": "Address",
+  "select-address": "Select Address",
+  "increase-quantity": "Increase Quantity",
+  "decrease-quantity": "Decrease Quantity",
+  "remove-from-cart": "Remove from Cart",
+  "cart-overlay": {
+    "order-successful": "Order placed successfully!",
+    "order-failed": "Failed to create order! Please try again!",
+    "close": "Close cart panel",
+    "cart-empty": "There's nothing in the cart!",
+    "special-instructions": "Special Instructions",
+    "special-instructions-placeholder": "any special instructions for preparation...",
+    "special-instructions-helper-text": "We'll TRY to follow the instructions, but might not be able to depending on circumstances",
+    "placing-order": "Placing Order..."
+  },
   "search": {
     "accessibilityLabel": "Search Box",
     "accessibilityClearButtonLabel": "Clear Search Box",
@@ -41,5 +62,8 @@
     "highest-number-first": "Highest Number (First)",
     "z-a": "Z - A",
     "a-z": "A - Z"
+  },
+  "forms": {
+    "form": "Form"
   }
 }

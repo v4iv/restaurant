@@ -53,7 +53,7 @@ const handler: Handler = async (
 
     switch (event.httpMethod) {
       case 'GET': {
-        const id = event.queryStringParameters.id
+        const id = event.path.split('/').pop()
 
         // Query FaunaDB for the address document
         const addressDocument: AddressDocument = await client.query(
@@ -131,7 +131,7 @@ const handler: Handler = async (
         // Get the address document to be updated
         const addressRef = q.Ref(
           q.Collection('addresses'),
-          event.queryStringParameters.address,
+          event.path.split('/').pop(),
         )
         const addressDocument: AddressDocument = await client.query(
           q.Get(addressRef),

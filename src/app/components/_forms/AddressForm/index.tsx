@@ -20,6 +20,7 @@ const ErrorToast = lazy(() => import('../../ErrorToast'))
 
 interface IAddressFormProps {
   address?: Address
+  toggleEditModal?: () => void
 }
 
 type FormValues = {
@@ -33,9 +34,9 @@ type FormValues = {
 }
 
 const AddressForm: React.FC<IAddressFormProps> = (props) => {
-  const {address} = props
+  const {address, toggleEditModal} = props
   const [gpsLocation, setGPSLocation] = useState(address?.location || '')
-  const [areaValue, setAreaValue] = useState('')
+  const [areaValue, setAreaValue] = useState(address?.area || '')
   const [t] = useTranslation(['common'])
   const {
     register,
@@ -78,6 +79,8 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
     try {
       if (address) {
         await updateAddressMutation({id: address.id, ...data})
+        // @ts-ignore
+        toggleEditModal()
       } else {
         await createAddressMutation({
           name: data.name,
@@ -87,7 +90,8 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
           area: data.area,
           phone: data.phone,
           location: gpsLocation,
-        }).unwrap()
+        })
+
         reset()
       }
     } catch (err) {
@@ -255,6 +259,16 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
             display="flex"
             wrap
           >
+            {address && (
+              <Box paddingX={1} paddingY={1}>
+                <Button
+                  text="Close"
+                  color="gray"
+                  size="lg"
+                  onClick={toggleEditModal}
+                />
+              </Box>
+            )}
             <Box paddingX={1} paddingY={1}>
               <Button
                 type="submit"

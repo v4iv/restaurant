@@ -16,11 +16,13 @@ const AddressPage: React.FC = () => {
   const [deleteAddressMutation, {isLoading: isDeleting}] =
     useDeleteAddressMutation()
 
-  const handleDeleteAddress = async (addressId: string) => {
-    try {
-      await deleteAddressMutation(addressId).unwrap()
-    } catch (err) {
-      console.error('Delete Address Error: ', err)
+  const handleDeleteAddress = async (addressId: string | undefined) => {
+    if (addressId) {
+      try {
+        await deleteAddressMutation(addressId).unwrap()
+      } catch (err) {
+        console.error('Delete Address Error: ', err)
+      }
     }
   }
   return (

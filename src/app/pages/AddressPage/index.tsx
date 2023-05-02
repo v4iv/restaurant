@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Box, Divider, Module, Spinner} from 'gestalt'
+import {Box, Divider, Flex, Module, Spinner, Text} from 'gestalt'
 import {
   useDeleteAddressMutation,
   useGetAddressesQuery,
@@ -29,9 +29,10 @@ const AddressPage: React.FC = () => {
     <>
       <Box paddingY={2} marginStart={1} marginEnd={1}>
         <Module.Expandable
-          accessibilityExpandLabel="Expand the module"
-          accessibilityCollapseLabel="Collapse the module"
-          id="ModuleExample - header expandable"
+          accessibilityExpandLabel="Add New Address Module"
+          accessibilityCollapseLabel="Collapse New Address Module"
+          id="addNewAddressModule"
+          expandedIndex={data?.length ? 1 : 0}
           items={[
             {
               title: 'New Address',
@@ -67,16 +68,20 @@ const AddressPage: React.FC = () => {
           )}
 
           <Box paddingY={3}>
-            {!isLoading &&
-              !isError &&
-              data?.map((address) => (
+            {!isLoading && !isError && data && data.length ? (
+              data.map((address) => (
                 <AddressCard
                   key={address.id}
                   address={address}
                   isDeleting={isDeleting}
                   handleDelete={handleDeleteAddress}
                 />
-              ))}
+              ))
+            ) : (
+              <Flex justifyContent="center">
+                <Text>Add an address to start ordering...</Text>
+              </Flex>
+            )}
           </Box>
         </Box>
       </Box>

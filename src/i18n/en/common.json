@@ -27,8 +27,8 @@
     "close": "Close cart panel",
     "cart-empty": "There's nothing in the cart!",
     "special-instructions": "Special Instructions",
-    "special-instructions-placeholder": "any special instructions for preparation...",
-    "special-instructions-helper-text": "We'll TRY to follow the instructions, but might not be able to depending on circumstances",
+    "special-instructions-placeholder": "any special requests...",
+    "special-instructions-helper-text": "We'll TRY to follow the request, but might not be able to depending on circumstances",
     "placing-order": "Placing Order..."
   },
   "search": {

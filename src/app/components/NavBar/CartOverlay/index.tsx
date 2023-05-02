@@ -2,6 +2,7 @@ import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {
   Box,
+  Button,
   CompositeZIndex,
   FixedZIndex,
   Layer,
@@ -25,15 +26,18 @@ import {
 import CartItem from './CartItem'
 import CartFooter from './CartFooter'
 import {useCreateOrderMutation} from '../../../services/order.service'
+import {useLocation} from 'wouter'
 
 interface CartOverlayProps {
   toggleShowCart: () => void
 }
 
 const CartOverlay: React.FC<CartOverlayProps> = (props) => {
+  const {toggleShowCart} = props
   const [t] = useTranslation(['common'])
   const dispatch = useAppDispatch()
-  const {toggleShowCart} = props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setLocation] = useLocation()
   const orderData = useAppSelector(selectCart)
   const cartItems = useAppSelector(selectCartProducts)
   const HEADER_ZINDEX = new FixedZIndex(10)
@@ -127,7 +131,12 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
               label={t('common:address') || 'Address'}
               onChange={({value}) => dispatch(setAddress(value))}
               value={useAppSelector(selectCartAddress)}
-              disabled={isLoading || isError}
+              disabled={
+                isLoading ||
+                isError ||
+                !addressOptions ||
+                (addressOptions && !addressOptions.length)
+              }
             >
               {addressOptions &&
                 addressOptions.map(({label, value}) => (
@@ -135,6 +144,17 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
                   <SelectList.Option key={value} label={label} value={value} />
                 ))}
             </SelectList>
+            <Box marginTop={2}>
+              <Button
+                text="Add New Address"
+                onClick={() => {
+                  setLocation('/address')
+                  toggleShowCart()
+                }}
+                size="sm"
+                fullWidth
+              />
+            </Box>
           </Box>
 
           <Box paddingY={2}>
@@ -143,11 +163,11 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
               onChange={({value}) => dispatch(setSpecialInstructions(value))}
               placeholder={
                 t('common:cart-overlay.special-instructions-placeholder') ||
-                'any special instructions for preparation...'
+                'any special requests...'
               }
               helperText={
                 t('common:cart-overlay.special-instructions-helper-text') ||
-                "We'll TRY to follow the instructions, but might not be able to depending on circumstances"
+                "We'll TRY to follow the request, but might not be able to depending on circumstances"
               }
               label={
                 t('common:cart-overlay.special-instructions') ||

@@ -21,16 +21,8 @@ const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
     <Dropdown anchor={menuAnchorRef.current} id="menu" onDismiss={toggleMenu}>
       <Dropdown.Item
         onSelect={() => {
-          setLocation('/profile')
-        }}
-        option={{
-          value: 'my-profile',
-          label: t('common:profile'),
-        }}
-      />
-      <Dropdown.Item
-        onSelect={() => {
           setLocation('/orders')
+          toggleMenu()
         }}
         option={{
           value: 'orders',
@@ -39,7 +31,18 @@ const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
       />
       <Dropdown.Item
         onSelect={() => {
+          setLocation('/address')
+          toggleMenu()
+        }}
+        option={{
+          value: 'address',
+          label: t('common:address'),
+        }}
+      />
+      <Dropdown.Item
+        onSelect={() => {
           setLocation('/settings')
+          toggleMenu()
         }}
         option={{
           value: 'settings',

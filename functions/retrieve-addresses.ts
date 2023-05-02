@@ -76,8 +76,8 @@ const handler: Handler = async (
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        addresses: addresses.data.map((address) => ({
+      body: JSON.stringify(
+        addresses.data.map((address) => ({
           id: address.ref.id,
           name: address.data.name,
           addressLineOne: address.data.addressLineOne,
@@ -88,7 +88,7 @@ const handler: Handler = async (
           location: address.data.location,
           userRef: address.data.userRef,
         })),
-      }),
+      ),
     }
   } catch (error) {
     console.error(error)

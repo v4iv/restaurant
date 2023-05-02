@@ -55,7 +55,7 @@ const SignInForm: React.FC = () => {
         <Box flex="grow" paddingX={3} paddingY={3}>
           <Box paddingX={3} paddingY={3}>
             <Heading size="300" accessibilityLevel={2}>
-              Sign In
+              {t('common:sign-in')}
             </Heading>
           </Box>
 

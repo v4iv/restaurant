@@ -47,7 +47,9 @@ const handler: Handler = async (
     // Connect to FaunaDB
     const client = new Client({secret: faunaSecret})
 
-    const userDocument: UserDocument = await client.query(q.Get(q.Identity()))
+    const userDocument: UserDocument = await client.query(
+      q.Get(q.CurrentIdentity()),
+    )
 
     switch (event.httpMethod) {
       case 'GET': {
@@ -178,7 +180,7 @@ const handler: Handler = async (
         }
       }
       case 'DELETE': {
-        const id = event.queryStringParameters.id
+        const id = event.path.split('/').pop()
 
         // Get the address document from FaunaDB
         const addressDocument: AddressDocument = await client.query(
@@ -188,6 +190,7 @@ const handler: Handler = async (
         // Delete the address document from FaunaDB
         await client.query(q.Delete(addressDocument.ref))
 
+        // Return a success response
         // Return a success response
         return {
           statusCode: 204,
@@ -203,6 +206,7 @@ const handler: Handler = async (
     }
   } catch (error) {
     // Handle any errors that occur
+    console.error('/api/address :', error)
     return {
       statusCode: 500,
       body: JSON.stringify({error: error.message}),

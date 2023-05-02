@@ -50,8 +50,7 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
   const addressOptions =
     !isLoading &&
     !isError &&
-    data &&
-    data.addresses.map((address) => ({
+    data?.map((address) => ({
       label: `${address.name}, ${address.addressLineOne}, ${address.area}`,
       value: address.id,
     }))
@@ -132,6 +131,7 @@ const CartOverlay: React.FC<CartOverlayProps> = (props) => {
             >
               {addressOptions &&
                 addressOptions.map(({label, value}) => (
+                  /* @ts-ignore */
                   <SelectList.Option key={value} label={label} value={value} />
                 ))}
             </SelectList>

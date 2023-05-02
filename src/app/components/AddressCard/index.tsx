@@ -1,5 +1,5 @@
 import React from 'react'
-import {Address} from '../../types/address.types.ts'
+import {Address} from '../../types/address.types'
 import {Avatar, Box, IconButton, Link, Text, Tooltip} from 'gestalt'
 
 interface IAddressCardProps {
@@ -22,6 +22,8 @@ const AddressCard: React.FC<IAddressCardProps> = (props) => {
       borderStyle="sm"
       rounding={1}
       padding={4}
+      marginStart={1}
+      marginEnd={1}
       marginBottom={2}
     >
       <Box paddingX={1}>
@@ -38,10 +40,19 @@ const AddressCard: React.FC<IAddressCardProps> = (props) => {
         <Text size="200">{area}</Text>
       </Box>
       <Box paddingX={1}>
+        <Tooltip inline text="Edit Address">
+          <IconButton
+            accessibilityLabel="Edit Address"
+            icon="edit"
+            size="xs"
+            onClick={() => console.log(id)}
+          />
+        </Tooltip>
         <Tooltip inline text="Delete Address">
           <IconButton
             accessibilityLabel="Delete Address"
             icon="trash-can"
+            size="xs"
             onClick={() => handleDelete(id)}
           />
         </Tooltip>

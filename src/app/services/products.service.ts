@@ -20,10 +20,10 @@ export const productApi = createApi({
               ...result.products.map(
                 ({id}) => ({type: 'Products', id} as const),
               ),
-              {type: 'Products', id: 'LIST'},
+              {type: 'Products', id: 'PRODUCTS_LIST'},
             ]
           : // an error occurred, but we still want to refetch this query when `{ type: 'Products', id: 'LIST' }` is invalidated
-            [{type: 'Products', id: 'LIST'}],
+            [{type: 'Products', id: 'PRODUCTS_LIST'}],
     }),
   }),
 })

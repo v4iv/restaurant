@@ -17,6 +17,8 @@ const HomePage = lazy(() => import('./pages/HomePage'))
 const SignUpPage = lazy(() => import('./pages/SignUpPage'))
 const SignInPage = lazy(() => import('./pages/SignInPage'))
 const AddressPage = lazy(() => import('./pages/AddressPage'))
+const OrdersPage = lazy(() => import('./pages/OrdersPage'))
+const SettingsPage = lazy(() => import('./pages/SettingsPage'))
 
 const App: React.FC = () => {
   const {t} = useTranslation(['common'])
@@ -86,6 +88,12 @@ const App: React.FC = () => {
                   </Route>
                   <Route path="/address" component={AddressPage}>
                     Address Page
+                  </Route>
+                  <Route path="/orders" component={OrdersPage}>
+                    Orders Page
+                  </Route>
+                  <Route path="/settings" component={SettingsPage}>
+                    Settings Page
                   </Route>
                 </Suspense>
               </Container>

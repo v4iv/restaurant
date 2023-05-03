@@ -21,26 +21,28 @@ interface IOrderCardProps {
 }
 
 const OrderCard: React.FC<IOrderCardProps> = (props) => {
-  const {
-    order: {id, status, products, total},
-  } = props
+  const {order} = props
+
+  const {id, status, products, total} = order
 
   return (
     <Module.Expandable
       accessibilityExpandLabel="Expand the module"
       accessibilityCollapseLabel="Collapse the module"
       id={id}
-      expandedIndex={status === 'DELIVERED' || status === 'CANCELLED' ? 0 : 1}
+      expandedIndex={status === 'DELIVERED' || status === 'CANCELLED' ? 1 : 0}
       items={[
         {
           children: (
             <Box padding={2}>
-              {products.map((item) => (
-                <Text size="200">
-                  {item.product.name} {item.price} x {item.quantity}
-                  {total}
-                </Text>
-              ))}
+              {products.map((item) => {
+                return (
+                  <Text size="200">
+                    {item.product.name} ₹ {item.price} x {item.quantity}
+                  </Text>
+                )
+              })}
+              <Text>₹ {total}</Text>
             </Box>
           ),
           summary: ['DELIVERED'],

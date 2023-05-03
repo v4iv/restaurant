@@ -80,44 +80,56 @@ const handler: Handler = async (
       ),
     )
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        orders.data.map((order) => {
-          const {
-            customer,
-            products,
-            status,
-            address,
-            specialInstructions,
-            total,
-            created,
-            updated,
-          } = order.data
+    const formattedOrders = await Promise.all(
+      orders.data.map(async (order) => {
+        const {
+          products,
+          status,
+          address,
+          specialInstructions,
+          total,
+          created,
+          updated,
+        } = order.data
 
-          const formattedProducts = products.map(
-            ({product, price, quantity}) => ({
-              product: {id: product.ref.id, ...product.data},
+        const formattedProducts = await Promise.all(
+          products.map(async ({product, price, quantity}) => {
+            const productData: any = await client.query(
+              q.Get(q.Ref(q.Collection('products'), product.id)),
+            )
+
+            return {
+              product: {
+                id: product.id,
+                ...productData.data,
+              },
               price,
               quantity,
-            }),
-          )
+            }
+          }),
+        )
 
-          const formattedAddress = {id: address.ref.id, ...address.data}
+        const addressData: any = await client.query(
+          q.Get(q.Ref(q.Collection('addresses'), address.id)),
+        )
+        const formattedAddress = {id: address.id, ...addressData.data}
 
-          return {
-            id: order.ref.id,
-            status,
-            products: formattedProducts,
-            address: formattedAddress,
-            customer: customer.data,
-            total,
-            specialInstructions,
-            created: created.toISOString(),
-            updated: updated.toISOString(),
-          }
-        }),
-      ),
+        return {
+          id: order.ref.id,
+          status,
+          products: formattedProducts,
+          address: formattedAddress,
+          total,
+          specialInstructions,
+          created,
+          updated,
+        }
+      }),
+    )
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(formattedOrders),
     }
   } catch (error) {
     console.error(error)

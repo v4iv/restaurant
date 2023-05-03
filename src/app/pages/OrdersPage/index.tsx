@@ -1,5 +1,5 @@
 import React, {lazy, Suspense} from 'react'
-import {Box, Spinner} from 'gestalt'
+import {Box, Flex, Spinner} from 'gestalt'
 import {useTranslation} from 'react-i18next'
 import {useGetOrdersQuery} from '../../services/order.service'
 import OrderCard from '../../components/OrderCard'
@@ -34,9 +34,18 @@ const OrdersPage: React.FC = () => {
 
   return (
     <>
-      <Box paddingY={2}>
-        {!isError &&
-          data?.map((order: any) => <OrderCard key={order.id} order={order} />)}
+      <Box paddingY={2} marginStart={1} marginEnd={1}>
+        <Flex
+          direction="column"
+          width="100%"
+          justifyContent="between"
+          gap={{column: 2, row: 0}}
+        >
+          {!isError &&
+            data?.map((order: any, idx) => (
+              <OrderCard key={idx} order={order} />
+            ))}
+        </Flex>
       </Box>
     </>
   )

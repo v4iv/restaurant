@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Module, Text} from 'gestalt'
 import {Product} from '../../types/product.types'
-import {Address} from '../../types/address.types.ts'
+import {Address} from '../../types/address.types'
 
 interface IOrderCardProps {
   order: {

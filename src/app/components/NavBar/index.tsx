@@ -1,7 +1,7 @@
 import React, {useContext, useRef, useState} from 'react'
 import {useLocation} from 'wouter'
 import {useTranslation} from 'react-i18next'
-import {Box, Button, Flex, IconButton} from 'gestalt'
+import {Box, Button, Flex, Icon, IconButton, Tooltip} from 'gestalt'
 import {fireVector} from '../../../assets/vectors'
 import ThemeContext from '../../contexts/theme.context'
 import {useAppSelector} from '../../hooks/useAppSelector'
@@ -65,8 +65,6 @@ const UnauthenticatedNavBar = () => {
 
 const AuthenticatedNavBar: React.FC = () => {
   const [t] = useTranslation(['common'])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setLocation] = useLocation()
   const themeContext = useContext(ThemeContext)
   const menuAnchorRef = useRef(null)
   const [showCart, setShowCart] = useState(false)
@@ -87,33 +85,45 @@ const AuthenticatedNavBar: React.FC = () => {
         alignItems="center"
       >
         <Flex gap={{row: 4, column: 0}} alignItems="center" flex="grow">
-          <IconButton
+          <Icon
             dangerouslySetSvgPath={fireVector}
-            iconColor="red"
-            size="xl"
+            color="brandPrimary"
+            size={32}
             accessibilityLabel={t('common:kitchen')}
-            onClick={() => setLocation('/')}
           />
           <Flex.Item flex="grow" />
-          <IconButton
-            accessibilityLabel={t('common:toggle-color-scheme')}
-            icon="workflow-status-in-progress"
-            size="md"
-            onClick={themeContext.toggleTheme}
-          />
-          <IconButton
-            accessibilityLabel={t('common:cart')}
-            icon="shopping-bag"
-            size="md"
-            onClick={toggleShowCart}
-          />
-          <IconButton
-            accessibilityLabel={t('common:profile-options')}
-            icon="person"
-            size="md"
-            ref={menuAnchorRef}
-            onClick={toggleMenu}
-          />
+          <Tooltip
+            inline
+            text={
+              themeContext.theme === 'light'
+                ? t('common:dark-mode')
+                : t('common:light-mode')
+            }
+          >
+            <IconButton
+              icon={themeContext.theme === 'light' ? 'moon' : 'sun'}
+              accessibilityLabel={t('common:toggle-color-scheme')}
+              size="md"
+              onClick={themeContext.toggleTheme}
+            />
+          </Tooltip>
+          <Tooltip inline text={t('common:cart')}>
+            <IconButton
+              accessibilityLabel={t('common:cart')}
+              icon="shopping-bag"
+              size="md"
+              onClick={toggleShowCart}
+            />
+          </Tooltip>
+          <Tooltip inline text={t('common:profile-options')}>
+            <IconButton
+              accessibilityLabel={t('common:profile-options')}
+              icon="person"
+              size="md"
+              ref={menuAnchorRef}
+              onClick={toggleMenu}
+            />
+          </Tooltip>
         </Flex>
       </Box>
       {openMenu && (

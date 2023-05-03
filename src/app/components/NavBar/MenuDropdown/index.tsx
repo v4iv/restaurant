@@ -1,8 +1,7 @@
 import React from 'react'
-import {useLocation} from 'wouter'
+import {useTranslation} from 'react-i18next'
 import {Dropdown} from 'gestalt'
 import {useSignOutMutation} from '../../../services/auth.service'
-import {useTranslation} from 'react-i18next'
 
 interface MenuDropDownProps {
   toggleMenu: () => void
@@ -12,38 +11,30 @@ interface MenuDropDownProps {
 const MenuDropDown: React.FC<MenuDropDownProps> = (props) => {
   const {toggleMenu, menuAnchorRef} = props
   const [t] = useTranslation(['common'])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setLocation] = useLocation()
 
   const [signOutMutation] = useSignOutMutation()
 
   return (
     <Dropdown anchor={menuAnchorRef.current} id="menu" onDismiss={toggleMenu}>
-      <Dropdown.Item
-        onSelect={() => {
-          setLocation('/orders')
-          toggleMenu()
-        }}
+      <Dropdown.Link
+        href="/orders"
+        onClick={() => toggleMenu()}
         option={{
           value: 'orders',
           label: t('common:orders'),
         }}
       />
-      <Dropdown.Item
-        onSelect={() => {
-          setLocation('/address')
-          toggleMenu()
-        }}
+      <Dropdown.Link
+        href="/address"
+        onClick={() => toggleMenu()}
         option={{
           value: 'address',
-          label: t('common:address'),
+          label: t('common:addresses'),
         }}
       />
-      <Dropdown.Item
-        onSelect={() => {
-          setLocation('/settings')
-          toggleMenu()
-        }}
+      <Dropdown.Link
+        href="/settings"
+        onClick={() => toggleMenu()}
         option={{
           value: 'settings',
           label: t('common:settings'),

@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import {User} from '../types/user.types.ts'
+import {User} from '../types/user.types'
 
 interface AuthResponse {
   token: string

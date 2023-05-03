@@ -78,7 +78,11 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
   const onSubmit = async (data: FormValues) => {
     try {
       if (address) {
-        await updateAddressMutation({id: address.id, ...data})
+        await updateAddressMutation({
+          id: address.id,
+          location: gpsLocation,
+          ...data,
+        })
         // @ts-ignore
         toggleEditModal()
       } else {
@@ -132,12 +136,7 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
               </Box>
             }
           >
-            <ErrorToast
-              message={
-                // @ts-ignore
-                error?.data?.error || t('common:something-went-wrong')
-              }
-            />
+            <ErrorToast message={t('common:errors.something-went-wrong')} />
           </Suspense>
         )}
         <Box flex="grow" paddingX={3} paddingY={3}>

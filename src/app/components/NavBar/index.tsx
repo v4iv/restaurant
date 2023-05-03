@@ -1,13 +1,14 @@
 import React, {useContext, useRef, useState} from 'react'
 import {useLocation} from 'wouter'
 import {useTranslation} from 'react-i18next'
-import {Box, Button, Flex, Icon, IconButton, Tooltip} from 'gestalt'
+import {Box, Button, Flex, Text, IconButton, Link, Tooltip} from 'gestalt'
 import {fireVector} from '../../../assets/vectors'
 import ThemeContext from '../../contexts/theme.context'
 import {useAppSelector} from '../../hooks/useAppSelector'
 import {selectIsAuthenticated} from '../../slices/auth.slice'
 import MenuDropdown from './MenuDropdown'
 import CartOverlay from './CartOverlay'
+import Logo from './Logo'
 
 const NavBar: React.FC = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -85,12 +86,29 @@ const AuthenticatedNavBar: React.FC = () => {
         alignItems="center"
       >
         <Flex gap={{row: 4, column: 0}} alignItems="center" flex="grow">
-          <Icon
-            dangerouslySetSvgPath={fireVector}
-            color="brandPrimary"
-            size={32}
-            accessibilityLabel={t('common:kitchen')}
-          />
+          <Text color="default" weight="bold">
+            {/* @ts-ignore */}
+            <Link accessibilityLabel={t('common:home')} href="/">
+              <Box paddingX={2}>
+                <Flex alignItems="center">
+                  <Logo width={32} height={32} />
+                  <Box
+                    display="none"
+                    lgDisplay="block"
+                    paddingX={1}
+                    dangerouslySetInlineStyle={{
+                      __style: {
+                        marginBottom: '1px',
+                        fontSize: '20px',
+                      },
+                    }}
+                  >
+                    {t('common:kitchen')}
+                  </Box>
+                </Flex>
+              </Box>
+            </Link>
+          </Text>
           <Flex.Item flex="grow" />
           <Tooltip
             inline

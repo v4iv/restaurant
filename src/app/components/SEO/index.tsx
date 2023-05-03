@@ -15,7 +15,7 @@ const SEO: React.FunctionComponent<IProps> = (props) => {
   return (
     <Helmet>
       <title>
-        {title} &middot; {t('common:kitchen')}
+        {title} &middot; {t('common:brand-name')}
       </title>
 
       <meta name="description" content={description} />
@@ -26,7 +26,10 @@ const SEO: React.FunctionComponent<IProps> = (props) => {
       {/* OpenGraph tags */}
       <meta property="og:url" content={url} />
 
-      <meta property="og:title" content={`${title} | ${t('common:kitchen')}`} />
+      <meta
+        property="og:title"
+        content={`${title} | ${t('common:brand-name')}`}
+      />
 
       <meta property="og:author" content="Restaurant" />
 

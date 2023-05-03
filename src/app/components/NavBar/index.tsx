@@ -40,7 +40,7 @@ const UnauthenticatedNavBar = () => {
           dangerouslySetSvgPath={fireVector}
           iconColor="red"
           size="xl"
-          accessibilityLabel={t('common:kitchen')}
+          accessibilityLabel={t('common:brand-name')}
           onClick={() => setLocation('/')}
         />
 
@@ -103,7 +103,7 @@ const AuthenticatedNavBar: React.FC = () => {
                       },
                     }}
                   >
-                    {t('common:kitchen')}
+                    {t('common:brand-name')}
                   </Box>
                 </Flex>
               </Box>
@@ -119,10 +119,10 @@ const AuthenticatedNavBar: React.FC = () => {
             }
           >
             <IconButton
-              icon={themeContext.theme === 'light' ? 'moon' : 'sun'}
               accessibilityLabel={t('common:toggle-color-scheme')}
               size="md"
-              onClick={themeContext.toggleTheme}
+              onClick={themeContext.toggleTheme /* @ts-ignore */}
+              icon={themeContext.theme === 'light' ? 'moon' : 'sun'}
             />
           </Tooltip>
           <Tooltip inline text={t('common:cart')}>

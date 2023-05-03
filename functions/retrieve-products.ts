@@ -31,7 +31,7 @@ const handler: Handler = async (
     const productDocuments: any = await client.query(
       q.Map(
         q.Paginate(q.Match(q.Index('all_products'))),
-        q.Lambda('ref', q.Get(q.Var('ref'))),
+        q.Lambda('product', q.Get(q.Var('product'))),
       ),
     )
 

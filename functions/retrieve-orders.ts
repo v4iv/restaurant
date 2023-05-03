@@ -15,23 +15,29 @@ interface UserDocument {
   }
 }
 
-interface AddressDocument {
+interface Product {
+  product: any
+  price: number
+  quantity: number
+}
+
+interface OrderDocument {
   ref: any
   ts: number
   data: {
-    name: string
-    addressLineOne: string
-    addressLineTwo: string
-    landmark: string
-    area: string
-    phone: string
-    location: string
-    userRef: any
+    customer: any
+    products: Product[]
+    status: string
+    address: any
+    specialInstructions: string
+    total: number
+    created: any
+    updated: any
   }
 }
 
-interface IAddresses {
-  data: AddressDocument[]
+interface IOrders {
+  data: OrderDocument[]
 }
 
 const handler: Handler = async (
@@ -62,32 +68,55 @@ const handler: Handler = async (
       q.Get(q.CurrentIdentity()),
     )
 
-    const addresses: IAddresses = await client.query(
+    const orders: IOrders = await client.query(
       q.Map(
         q.Paginate(
           q.Match(
-            q.Index('addresses_by_customer'),
+            q.Index('orders_by_customer'),
             q.Ref(q.Collection('users'), userDocument.ref.id),
           ),
         ),
-        q.Lambda('address', q.Get(q.Var('address'))),
+        q.Lambda('order', q.Get(q.Var('order'))),
       ),
     )
 
     return {
       statusCode: 200,
       body: JSON.stringify(
-        addresses.data.map((address) => ({
-          id: address.ref.id,
-          name: address.data.name,
-          addressLineOne: address.data.addressLineOne,
-          addressLineTwo: address.data.addressLineTwo,
-          landmark: address.data.landmark,
-          area: address.data.area,
-          phone: address.data.phone,
-          location: address.data.location,
-          userRef: address.data.userRef,
-        })),
+        orders.data.map((order) => {
+          const {
+            customer,
+            products,
+            status,
+            address,
+            specialInstructions,
+            total,
+            created,
+            updated,
+          } = order.data
+
+          const formattedProducts = products.map(
+            ({product, price, quantity}) => ({
+              product: {id: product.ref.id, ...product.data},
+              price,
+              quantity,
+            }),
+          )
+
+          const formattedAddress = {id: address.ref.id, ...address.data}
+
+          return {
+            id: order.ref.id,
+            status,
+            products: formattedProducts,
+            address: formattedAddress,
+            customer: customer.data,
+            total,
+            specialInstructions,
+            created: created.toISOString(),
+            updated: updated.toISOString(),
+          }
+        }),
       ),
     }
   } catch (error) {

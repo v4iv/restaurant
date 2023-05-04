@@ -65,9 +65,11 @@ const handler: Handler = async (
     const addresses: IAddresses = await client.query(
       q.Map(
         q.Paginate(
-          q.Match(
-            q.Index('addresses_by_customer'),
-            q.Ref(q.Collection('users'), userDocument.ref.id),
+          q.Reverse(
+            q.Match(
+              q.Index('addresses_by_customer'),
+              q.Ref(q.Collection('users'), userDocument.ref.id),
+            ),
           ),
         ),
         q.Lambda('address', q.Get(q.Var('address'))),

@@ -30,7 +30,7 @@ const handler: Handler = async (
     // Retrieve all product documents from FaunaDB
     const productDocuments: any = await client.query(
       q.Map(
-        q.Paginate(q.Match(q.Index('all_products'))),
+        q.Paginate(q.Reverse(q.Match(q.Index('all_products')))),
         q.Lambda('product', q.Get(q.Var('product'))),
       ),
     )

@@ -24,13 +24,14 @@ const UnauthenticatedNavBar = () => {
   const [t] = useTranslation(['common'])
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setLocation] = useLocation()
+  const themeContext = useContext(ThemeContext)
 
   return (
     <Box
       color="default"
       rounding={1}
       margin={1}
-      borderStyle="sm"
+      borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
       padding={4}
       display="flex"
       alignItems="center"
@@ -80,7 +81,7 @@ const AuthenticatedNavBar: React.FC = () => {
         color="default"
         rounding={1}
         margin={1}
-        borderStyle="sm"
+        borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
         padding={4}
         display="flex"
         alignItems="center"

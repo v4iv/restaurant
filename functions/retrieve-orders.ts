@@ -71,9 +71,11 @@ const handler: Handler = async (
     const orders: IOrders = await client.query(
       q.Map(
         q.Paginate(
-          q.Match(
-            q.Index('orders_by_customer'),
-            q.Ref(q.Collection('users'), userDocument.ref.id),
+          q.Reverse(
+            q.Match(
+              q.Index('orders_by_customer'),
+              q.Ref(q.Collection('users'), userDocument.ref.id),
+            ),
           ),
         ),
         q.Lambda('order', q.Get(q.Var('order'))),

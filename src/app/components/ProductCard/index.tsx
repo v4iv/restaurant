@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Box, Button, Column, Icon, IconButton, Image, Text} from 'gestalt'
 import {useAppDispatch} from '../../hooks/useAppDispatch'
 import {CartItem} from '../../types/cart.types'
@@ -9,6 +9,7 @@ import {
   removeFromCart,
 } from '../../slices/cart.slice'
 import {useTranslation} from 'react-i18next'
+import ThemeContext from '../../contexts/theme.context.ts'
 
 interface ProductCardProps {
   product: {
@@ -25,9 +26,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = (props) => {
-  const [t] = useTranslation(['homepage'])
-  const dispatch = useAppDispatch()
   const {product, getCartQuantity} = props
+  const [t] = useTranslation(['homepage'])
+  const themeContext = useContext(ThemeContext)
+  const dispatch = useAppDispatch()
+
   const {
     id,
     name,
@@ -47,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
       marginStart={1}
       marginEnd={1}
       marginBottom={3}
-      borderStyle="sm"
+      borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
       justifyContent="center"
       alignItems="start"
       direction="row"

@@ -31,8 +31,22 @@ export const authApi = createApi({
         headers: {authorization: `Bearer ${localStorage.getItem('token')}`},
       }),
     }),
+    updatePassword: builder.mutation<
+      any,
+      {currentPassword: string; newPassword: string}
+    >({
+      query: ({currentPassword, newPassword}) => ({
+        url: '/update-password',
+        method: 'POST',
+        body: {currentPassword, newPassword},
+      }),
+    }),
   }),
 })
 
-export const {useSignUpMutation, useSignInMutation, useSignOutMutation} =
-  authApi
+export const {
+  useSignUpMutation,
+  useSignInMutation,
+  useSignOutMutation,
+  useUpdatePasswordMutation,
+} = authApi

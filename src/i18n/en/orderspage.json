@@ -1,0 +1,6 @@
+{
+  "ORDER_RECEIVED": "Preparing",
+  "ORDER_DISPATCHED": "On The Way",
+  "DELIVERED": "Delivered",
+  "CANCELLED": "Cancelled"
+}

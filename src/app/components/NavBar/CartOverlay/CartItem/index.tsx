@@ -1,4 +1,5 @@
 import React from 'react'
+import {useTranslation} from 'react-i18next'
 import {Box, IconButton, Text} from 'gestalt'
 import {useAppDispatch} from '../../../../hooks/useAppDispatch'
 import {
@@ -7,7 +8,6 @@ import {
   removeFromCart,
 } from '../../../../slices/cart.slice'
 import {CartItem} from '../../../../types/cart.types'
-import {useTranslation} from 'react-i18next'
 
 interface ICartItemProps {
   cartItem: CartItem
@@ -21,10 +21,11 @@ const CartItem: React.FC<ICartItemProps> = (props) => {
   const {id, name, quantity, price} = cartItem
   return (
     <Box
+      color="elevationRaised"
       alignItems="center"
       direction="row"
       display="flex"
-      borderStyle="sm"
+      borderStyle="raisedTopShadow"
       rounding={1}
       padding={4}
       marginBottom={2}

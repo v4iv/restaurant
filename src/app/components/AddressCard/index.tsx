@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {Address} from '../../types/address.types'
 import {
   Avatar,
@@ -14,6 +14,7 @@ import {
   Tooltip,
 } from 'gestalt'
 import {AddressForm} from '../_forms'
+import ThemeContext from '../../contexts/theme.context.ts'
 
 interface IAddressCardProps {
   address: Address
@@ -23,6 +24,7 @@ interface IAddressCardProps {
 
 const AddressCard: React.FC<IAddressCardProps> = (props) => {
   const {address, isDeleting, handleDelete} = props
+  const themeContext = useContext(ThemeContext)
 
   const {id, name, phone, addressLineOne, addressLineTwo, landmark, area} =
     address
@@ -41,7 +43,7 @@ const AddressCard: React.FC<IAddressCardProps> = (props) => {
         alignItems="start"
         direction="row"
         display="flex"
-        borderStyle="sm"
+        borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
         rounding={1}
         padding={4}
         marginStart={1}

@@ -46,8 +46,6 @@ const AddressCard: React.FC<IAddressCardProps> = (props) => {
         borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
         rounding={1}
         padding={4}
-        marginStart={1}
-        marginEnd={1}
         marginBottom={2}
       >
         <Box paddingX={1}>

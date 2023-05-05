@@ -33,12 +33,12 @@ export const authApi = createApi({
     }),
     updatePassword: builder.mutation<
       any,
-      {currentPassword: string; newPassword: string}
+      {email: string; currentPassword: string; newPassword: string}
     >({
-      query: ({currentPassword, newPassword}) => ({
+      query: ({email, currentPassword, newPassword}) => ({
         url: '/update-password',
         method: 'POST',
-        body: {currentPassword, newPassword},
+        body: {email, currentPassword, newPassword},
       }),
     }),
   }),

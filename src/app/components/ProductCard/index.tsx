@@ -47,8 +47,6 @@ const ProductCard: React.FC<ProductCardProps> = (props) => {
       color="default"
       rounding={2}
       padding={4}
-      marginStart={1}
-      marginEnd={1}
       marginBottom={3}
       borderStyle={themeContext.theme === 'light' ? 'raisedTopShadow' : 'sm'}
       justifyContent="center"

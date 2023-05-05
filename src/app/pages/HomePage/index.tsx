@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
         description={t('common:description')}
       />
 
-      <Box paddingY={2}>
+      <Box paddingY={2} marginStart={1} marginEnd={1}>
         {!isError &&
           data?.products?.map((product) => (
             <ProductCard

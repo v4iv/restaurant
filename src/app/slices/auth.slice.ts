@@ -61,4 +61,9 @@ const authSlice = createSlice({
 export const {setUser, setError, clearError} = authSlice.actions
 
 export const selectIsAuthenticated = () => !!localStorage.getItem('token')
+
+export const selectUser = () => {
+  const userDocument = localStorage.getItem('user') || '{}'
+  return JSON.parse(userDocument)
+}
 export default authSlice.reducer

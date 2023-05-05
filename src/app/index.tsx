@@ -1,5 +1,5 @@
 import React, {lazy, Suspense, useEffect, useState} from 'react'
-import {Route, useLocation} from 'wouter'
+import {Route, Switch, useLocation} from 'wouter'
 import {useTranslation} from 'react-i18next'
 import {
   Box,
@@ -11,6 +11,7 @@ import {
 } from 'gestalt'
 import ThemeContext from './contexts/theme.context'
 import NavBar from './components/NavBar'
+import AuthenticatedRoute from './components/AuthenticatedRoute'
 
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -77,24 +78,20 @@ const App: React.FC = () => {
                     </Box>
                   }
                 >
-                  <Route path="/" component={HomePage}>
-                    Home Page
-                  </Route>
-                  <Route path="/sign-in" component={SignInPage}>
-                    Sign In Page
-                  </Route>
-                  <Route path="/sign-up" component={SignUpPage}>
-                    Sign Up Page
-                  </Route>
-                  <Route path="/address" component={AddressPage}>
-                    Address Page
-                  </Route>
-                  <Route path="/orders" component={OrdersPage}>
-                    Orders Page
-                  </Route>
-                  <Route path="/settings" component={SettingsPage}>
-                    Settings Page
-                  </Route>
+                  <Switch>
+                    <Route path="/" component={HomePage} />
+                    <Route path="/sign-in" component={SignInPage} />
+                    <Route path="/sign-up" component={SignUpPage} />
+                    <AuthenticatedRoute
+                      path="/address"
+                      component={AddressPage}
+                    />
+                    <AuthenticatedRoute path="/orders" component={OrdersPage} />
+                    <AuthenticatedRoute
+                      path="/settings"
+                      component={SettingsPage}
+                    />
+                  </Switch>
                 </Suspense>
               </Container>
             </Box>

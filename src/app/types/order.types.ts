@@ -1,12 +1,12 @@
 interface Products {
-  product: {
-    id: string
+  product?: {
+    id?: string
     name: string
     description?: string
-    image: string
-    isVegetarian: boolean
+    image?: string
+    isVegetarian?: boolean
     price: number
-    isAvailable: boolean
+    isAvailable?: boolean
     quantity: number
   }
   quantity: number
@@ -17,7 +17,7 @@ export interface Order {
   id?: string
   products: Products[]
   address: string
-  status: string
+  status?: string
   specialInstructions?: string
   total?: number | string
 }

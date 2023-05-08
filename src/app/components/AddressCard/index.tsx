@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from 'gestalt'
 import {AddressForm} from '../_forms'
-import ThemeContext from '../../contexts/theme.context.ts'
+import ThemeContext from '../../contexts/theme.context'
 
 interface IAddressCardProps {
   address: Address

@@ -1,3 +1,5 @@
 export * from './SignUpForm'
 export * from './SignInForm'
 export * from './AddressForm'
+export * from './UpdatePasswordForm'
+export * from './EditProfileForm'

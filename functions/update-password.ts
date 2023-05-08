@@ -24,7 +24,7 @@ const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext,
 ) => {
-  if (event.httpMethod !== 'POST') {
+  if (event.httpMethod !== 'PUT') {
     return {
       statusCode: 405,
       body: JSON.stringify({message: 'Method Not Allowed'}),

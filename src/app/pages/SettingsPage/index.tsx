@@ -1,11 +1,15 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {
   Avatar,
   Box,
   Button,
+  CompositeZIndex,
   Divider,
+  FixedZIndex,
   Heading,
+  Layer,
   Link,
+  Modal,
   Module,
   OnLinkNavigationProvider,
   SlimBanner,
@@ -14,12 +18,17 @@ import {
 import ThemeContext from '../../contexts/theme.context'
 import {useAppSelector} from '../../hooks/useAppSelector'
 import {selectUser} from '../../slices/auth.slice'
-import {UpdatePasswordForm} from '../../components/_forms/UpdatePasswordForm'
+import {EditProfileForm, UpdatePasswordForm} from '../../components/_forms'
 
 const SettingsPage: React.FC = () => {
+  const [showEditModal, setShowEditModal] = useState(false)
   const user = useAppSelector(selectUser)
   const themeContext = useContext(ThemeContext)
   const {firstName, lastName, email, phone} = user
+  const HEADER_ZINDEX = new FixedZIndex(10)
+  const modalZIndex = new CompositeZIndex([HEADER_ZINDEX])
+
+  const toggleEditModal = () => setShowEditModal(!showEditModal)
 
   return (
     <>
@@ -54,7 +63,7 @@ const SettingsPage: React.FC = () => {
               </Box>
             </Box>
             <Box paddingX={1}>
-              <Button text="Edit" color="red" />
+              <Button text="Edit" color="red" onClick={toggleEditModal} />
             </Box>
           </Box>
 
@@ -97,6 +106,19 @@ const SettingsPage: React.FC = () => {
           </Box>
         </Box>
       </OnLinkNavigationProvider>
+
+      {showEditModal && (
+        <Layer zIndex={modalZIndex}>
+          <Modal
+            accessibilityModalLabel="Update Profile"
+            align="start"
+            heading="Update Profile"
+            onDismiss={toggleEditModal}
+          >
+            <EditProfileForm user={user} />
+          </Modal>
+        </Layer>
+      )}
     </>
   )
 }

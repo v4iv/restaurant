@@ -37,8 +37,18 @@ export const authApi = createApi({
     >({
       query: ({email, currentPassword, newPassword}) => ({
         url: '/update-password',
-        method: 'POST',
+        method: 'PUT',
         body: {email, currentPassword, newPassword},
+      }),
+    }),
+    updateProfile: builder.mutation<
+      any,
+      {firstName: string; lastName: string; email: string; phone: string}
+    >({
+      query: (data) => ({
+        url: '/update-profile',
+        method: 'PUT',
+        body: data,
       }),
     }),
   }),
@@ -49,4 +59,5 @@ export const {
   useSignInMutation,
   useSignOutMutation,
   useUpdatePasswordMutation,
+  useUpdateProfileMutation,
 } = authApi

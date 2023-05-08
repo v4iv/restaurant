@@ -1,6 +1,5 @@
 import React, {lazy, Suspense} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useLocation} from 'wouter'
 import {useForm} from 'react-hook-form'
 import {Box, Button, Spinner, TextField} from 'gestalt'
 import {useUpdateProfileMutation} from '../../../services/auth.service'
@@ -17,12 +16,12 @@ type FormValues = {
 
 interface IEditProfileFormProps {
   user: User
+  onDismiss: () => void
 }
 
 const EditProfileForm: React.FC<IEditProfileFormProps> = (props) => {
-  const {user} = props
+  const {user, onDismiss} = props
   const [t] = useTranslation(['common'])
-  const [, setLocation] = useLocation()
   const {
     register,
     handleSubmit,
@@ -47,11 +46,11 @@ const EditProfileForm: React.FC<IEditProfileFormProps> = (props) => {
         lastName: data.lastName,
         email: data.email,
         phone: data.phone,
-      }).unwrap()
-      // sign up successful
-      setLocation('/sign-in')
+      })
+
+      onDismiss()
     } catch (err) {
-      console.error('Sign Up Error: ', err)
+      console.error('Edit Profile Error: ', err)
     }
   }
 

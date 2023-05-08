@@ -115,7 +115,7 @@ const SettingsPage: React.FC = () => {
             heading="Update Profile"
             onDismiss={toggleEditModal}
           >
-            <EditProfileForm user={user} />
+            <EditProfileForm user={user} onDismiss={toggleEditModal} />
           </Modal>
         </Layer>
       )}

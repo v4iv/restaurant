@@ -49,6 +49,7 @@ export const authApi = createApi({
         url: '/update-profile',
         method: 'PUT',
         body: data,
+        headers: {authorization: `Bearer ${localStorage.getItem('token')}`},
       }),
     }),
   }),

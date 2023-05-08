@@ -14,8 +14,7 @@ type FormValues = {
 
 const SignInForm: React.FC = () => {
   const [t] = useTranslation(['common'])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   const {
     register,
     handleSubmit,
@@ -32,7 +31,7 @@ const SignInForm: React.FC = () => {
         password: data.password,
       }).unwrap()
       // sign up successful
-      setLocation('/')
+      setLocation('/', {replace: true})
     } catch (err) {
       console.error('Sign In Error: ', err)
     }

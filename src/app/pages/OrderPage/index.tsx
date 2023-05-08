@@ -68,9 +68,9 @@ const OrderPage: React.FC<IOrderPageProps> = (props) => {
 
             <Table.Body>
               {data?.products.map(({product, quantity, price}) => (
-                <Table.Row key={product.id}>
+                <Table.Row key={product?.id}>
                   <Table.Cell>
-                    <Text>{product.name}</Text>
+                    <Text>{product?.name}</Text>
                   </Table.Cell>
                   <Table.Cell>
                     <Text>{quantity}</Text>

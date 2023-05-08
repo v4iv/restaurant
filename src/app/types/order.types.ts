@@ -1,6 +1,6 @@
 interface Products {
   product?: {
-    id?: string
+    id: string
     name: string
     description?: string
     image?: string

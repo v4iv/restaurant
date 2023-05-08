@@ -1,76 +1,124 @@
-import React from 'react'
-import orderReceived from '../../../assets/vectors/ORDER_RECEIVED.svg'
-import orderDispatched from '../../../assets/vectors/ORDER_DISPATCHED.svg'
-import delivered from '../../../assets/vectors/DELIVERED.svg'
-import cancelled from '../../../assets/vectors/CANCELLED.svg'
-import {Box, Image} from 'gestalt'
+import React, {lazy, Suspense} from 'react'
+import {useTranslation} from 'react-i18next'
+import {Box, Spinner} from 'gestalt'
+
+const OrderReceived = lazy(() => import('./OrderReceived'))
+const OrderDispatched = lazy(() => import('./OrderDispatched'))
+const Delivered = lazy(() => import('./Delivered'))
+const Cancelled = lazy(() => import('./Cancelled'))
 
 interface IStatusGraphic {
   status: string | undefined
 }
 const StatusGraphic: React.FC<IStatusGraphic> = (props) => {
   const {status} = props
+  const {t} = useTranslation(['common'])
 
   switch (status) {
     case 'ORDER_RECEIVED':
       return (
-        <Box>
-          <Image
-            alt="ORDER_RECEIVED"
-            color="transparent"
-            naturalHeight={1}
-            naturalWidth={1}
-            src={orderReceived}
-          />
-        </Box>
+        <Suspense
+          fallback={
+            <Box
+              position="fixed"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top
+              left
+              right
+              bottom
+            >
+              <Spinner accessibilityLabel={t('common:loading')} show />
+            </Box>
+          }
+        >
+          <OrderReceived />
+        </Suspense>
       )
     case 'ORDER_DISPATCHED':
       return (
-        <Box>
-          <Image
-            alt="ORDER_DISPATCHED"
-            color="transparent"
-            naturalHeight={1}
-            naturalWidth={1}
-            src={orderDispatched}
-          />
-        </Box>
+        <Suspense
+          fallback={
+            <Box
+              position="fixed"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top
+              left
+              right
+              bottom
+            >
+              <Spinner accessibilityLabel={t('common:loading')} show />
+            </Box>
+          }
+        >
+          <OrderDispatched />
+        </Suspense>
       )
     case 'DELIVERED':
       return (
-        <Box>
-          <Image
-            alt="DELIVERED"
-            color="transparent"
-            naturalHeight={1}
-            naturalWidth={1}
-            src={delivered}
-          />
-        </Box>
+        <Suspense
+          fallback={
+            <Box
+              position="fixed"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top
+              left
+              right
+              bottom
+            >
+              <Spinner accessibilityLabel={t('common:loading')} show />
+            </Box>
+          }
+        >
+          <Delivered />
+        </Suspense>
       )
     case 'CANCELLED':
       return (
-        <Box>
-          <Image
-            alt="CANCELLED"
-            color="transparent"
-            naturalHeight={1}
-            naturalWidth={1}
-            src={cancelled}
-          />
-        </Box>
+        <Suspense
+          fallback={
+            <Box
+              position="fixed"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top
+              left
+              right
+              bottom
+            >
+              <Spinner accessibilityLabel={t('common:loading')} show />
+            </Box>
+          }
+        >
+          <Cancelled />
+        </Suspense>
       )
     default:
       return (
-        <Box>
-          <Image
-            alt="CANCELLED"
-            color="transparent"
-            naturalHeight={1}
-            naturalWidth={1}
-            src={cancelled}
-          />
-        </Box>
+        <Suspense
+          fallback={
+            <Box
+              position="fixed"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              top
+              left
+              right
+              bottom
+            >
+              <Spinner accessibilityLabel={t('common:loading')} show />
+            </Box>
+          }
+        >
+          <Cancelled />
+        </Suspense>
       )
   }
 }

@@ -20,6 +20,7 @@ const SignInPage = lazy(() => import('./pages/SignInPage'))
 const AddressPage = lazy(() => import('./pages/AddressPage'))
 const OrdersPage = lazy(() => import('./pages/OrdersPage'))
 const SettingsPage = lazy(() => import('./pages/SettingsPage'))
+const PageNotFound = lazy(() => import('./pages/404'))
 
 const App: React.FC = () => {
   const {t} = useTranslation(['common'])
@@ -91,6 +92,7 @@ const App: React.FC = () => {
                       path="/settings"
                       component={SettingsPage}
                     />
+                    <Route component={PageNotFound} />
                   </Switch>
                 </Suspense>
               </Container>

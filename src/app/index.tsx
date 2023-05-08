@@ -19,6 +19,7 @@ const SignUpPage = lazy(() => import('./pages/SignUpPage'))
 const SignInPage = lazy(() => import('./pages/SignInPage'))
 const AddressPage = lazy(() => import('./pages/AddressPage'))
 const OrdersPage = lazy(() => import('./pages/OrdersPage'))
+const OrderPage = lazy(() => import('./pages/OrderPage'))
 const SettingsPage = lazy(() => import('./pages/SettingsPage'))
 const PageNotFound = lazy(() => import('./pages/404'))
 
@@ -92,6 +93,10 @@ const App: React.FC = () => {
                       path="/settings"
                       component={SettingsPage}
                     />
+                    <AuthenticatedRoute path="/order/:id">
+                      {/* @ts-ignore */}
+                      {(params) => <OrderPage id={params.id} />}
+                    </AuthenticatedRoute>
                     <Route component={PageNotFound} />
                   </Switch>
                 </Suspense>

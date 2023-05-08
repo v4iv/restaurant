@@ -1,5 +1,5 @@
 import React from 'react'
-import {Box, Module, Table, Text} from 'gestalt'
+import {Box, Button, Module, Table, Text} from 'gestalt'
 import {Product} from '../../types/product.types'
 import {Address} from '../../types/address.types'
 import {useTranslation} from 'react-i18next'
@@ -95,6 +95,13 @@ const OrderCard: React.FC<IOrderCardProps> = (props) => {
                   </Table.Row>
                 </Table.Footer>
               </Table>
+              <Button
+                role="link"
+                text="Track"
+                href={`/order/${id}`}
+                color="red"
+                fullWidth
+              />
             </Box>
           ),
           badge: {

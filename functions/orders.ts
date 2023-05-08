@@ -30,6 +30,27 @@ interface AddressDocument {
   }
 }
 
+interface Product {
+  product: any
+  price: number
+  quantity: number
+}
+
+interface OrderDocument {
+  ref: any
+  ts: number
+  data: {
+    customer: any
+    products: Product[]
+    status: string
+    address: any
+    specialInstructions: string
+    total: number
+    created: any
+    updated: any
+  }
+}
+
 const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext,
@@ -52,6 +73,67 @@ const handler: Handler = async (
     )
 
     switch (event.httpMethod) {
+      case 'GET': {
+        const id = event.path.split('/').pop()
+
+        // Query FaunaDB for the order document
+        const orderDocument: OrderDocument = await client.query(
+          q.Get(q.Ref(q.Collection('orders'), id)),
+        )
+
+        // Extract the order data from the document
+        const order = {
+          id: orderDocument.ref.id,
+          ...orderDocument.data,
+        }
+
+        const {
+          products,
+          status,
+          address,
+          specialInstructions,
+          total,
+          created,
+          updated,
+        } = order
+
+        const formattedProducts = await Promise.all(
+          products.map(async ({product, price, quantity}) => {
+            const productData: any = await client.query(
+              q.Get(q.Ref(q.Collection('products'), product.id)),
+            )
+
+            return {
+              product: {
+                id: product.id,
+                ...productData.data,
+              },
+              price,
+              quantity,
+            }
+          }),
+        )
+
+        const addressData: any = await client.query(
+          q.Get(q.Ref(q.Collection('addresses'), address.id)),
+        )
+        const formattedAddress = {id: address.id, ...addressData.data}
+
+        // Return the order as a JSON response
+        return {
+          statusCode: 200,
+          body: JSON.stringify({
+            id: order.id,
+            status,
+            products: formattedProducts,
+            address: formattedAddress,
+            total,
+            specialInstructions,
+            created,
+            updated,
+          }),
+        }
+      }
       case 'POST': {
         const {products, address, specialInstructions} = JSON.parse(event.body)
 

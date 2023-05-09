@@ -16,8 +16,8 @@ interface ICartFooterProps {
 }
 
 const CartFooter: React.FC<ICartFooterProps> = (props) => {
-  const [t] = useTranslation(['common'])
   const {total, handleCheckout, isError, isLoading} = props
+  const [t] = useTranslation(['common'])
   const cartItems = useAppSelector(selectCartProducts)
   const selectedAddress = useAppSelector(selectCartAddress)
 

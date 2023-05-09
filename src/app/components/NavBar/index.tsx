@@ -4,10 +4,11 @@ import {useTranslation} from 'react-i18next'
 import {Box, Button, Flex, IconButton, Link, Text, Tooltip} from 'gestalt'
 import ThemeContext from '../../contexts/theme.context'
 import {useAppSelector} from '../../hooks/useAppSelector'
+import {selectCartProducts} from '../../slices/cart.slice'
 import {selectIsAuthenticated} from '../../slices/auth.slice'
-import MenuDropdown from './MenuDropdown'
-import CartOverlay from './CartOverlay'
 import Logo from './Logo'
+import CartOverlay from './CartOverlay'
+import MenuDropdown from './MenuDropdown'
 
 const NavBar: React.FC = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -82,6 +83,7 @@ const UnauthenticatedNavBar = () => {
 
 const AuthenticatedNavBar: React.FC = () => {
   const [t] = useTranslation(['common'])
+  const cartItems = useAppSelector(selectCartProducts)
   const themeContext = useContext(ThemeContext)
   const menuAnchorRef = useRef(null)
   const [showCart, setShowCart] = useState(false)
@@ -147,6 +149,7 @@ const AuthenticatedNavBar: React.FC = () => {
               icon="shopping-bag"
               size="md"
               onClick={toggleShowCart}
+              iconColor={cartItems.length ? 'brandPrimary' : undefined}
             />
           </Tooltip>
           <Tooltip inline text={t('common:profile-options')}>

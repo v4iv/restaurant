@@ -161,10 +161,7 @@ const handler: Handler = async (
 
         return {
           statusCode: 200,
-          body: JSON.stringify({
-            message: 'Order submitted successfully',
-            order: result.data,
-          }),
+          body: JSON.stringify({id: result.ref.id, ...result.data}),
         }
       }
       default: {

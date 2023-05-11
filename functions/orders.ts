@@ -30,6 +30,20 @@ interface AddressDocument {
   }
 }
 
+interface ProductDocument {
+  ref: any
+  ts: number
+  data: {
+    name: string
+    description: string
+    image: string
+    isVegetarian: boolean
+    price: number
+    quantity: number
+    isAvailable: boolean
+  }
+}
+
 interface Product {
   product: any
   price: number
@@ -40,10 +54,25 @@ interface OrderDocument {
   ref: any
   ts: number
   data: {
-    customer: any
+    customer: UserDocument
     products: Product[]
     status: string
     address: any
+    specialInstructions: string
+    total: number
+    created: any
+    updated: any
+  }
+}
+
+interface SubmitOrderResult {
+  ref: any
+  ts: number
+  data: {
+    customer: UserDocument
+    products: Product[]
+    status: string
+    address: AddressDocument
     specialInstructions: string
     total: number
     created: any
@@ -99,7 +128,7 @@ const handler: Handler = async (
 
         const formattedProducts = await Promise.all(
           products.map(async ({product, price, quantity}) => {
-            const productData: any = await client.query(
+            const productData: ProductDocument = await client.query(
               q.Get(q.Ref(q.Collection('products'), product.id)),
             )
 
@@ -149,7 +178,7 @@ const handler: Handler = async (
         }))
 
         // Call the submit_order FQL function with the necessary arguments
-        const result: any = await client.query(
+        const result: SubmitOrderResult = await client.query(
           q.Call(
             q.Function('submit_order'),
             productsFormatted,

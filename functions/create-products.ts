@@ -1,6 +1,34 @@
 import {Handler, HandlerContext, HandlerEvent} from '@netlify/functions'
 import {Client, query as q} from 'faunadb'
 
+interface UserDocument {
+  ref: any
+  ts: number
+  data: {
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    isManager: boolean
+    isVerified: boolean
+    isActive: boolean
+  }
+}
+
+interface ProductDocument {
+  ref: any
+  ts: number
+  data: {
+    name: string
+    description: string
+    image: string
+    isVegetarian: boolean
+    price: number
+    quantity: number
+    isAvailable: boolean
+  }
+}
+
 interface Product {
   name: string
   description: string
@@ -37,7 +65,8 @@ const handler: Handler = async (
     const client = new Client({secret: faunaSecret})
 
     // Check if the user is a manager
-    const user: any = await client.query(q.Get(q.CurrentIdentity()))
+    const user: UserDocument = await client.query(q.Get(q.CurrentIdentity()))
+
     if (!user.data.isManager) {
       return {
         statusCode: 401,
@@ -49,7 +78,7 @@ const handler: Handler = async (
     const products: Product[] = JSON.parse(event.body)
 
     // Batch create the products in FaunaDB
-    const createdProductDocuments: any = await client.query(
+    const createdProductDocuments: ProductDocument[] = await client.query(
       q.Map(
         products,
         q.Lambda(

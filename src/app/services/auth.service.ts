@@ -42,7 +42,7 @@ export const authApi = createApi({
       }),
     }),
     updateProfile: builder.mutation<
-      any,
+      User,
       {firstName: string; lastName: string; email: string; phone: string}
     >({
       query: (data) => ({

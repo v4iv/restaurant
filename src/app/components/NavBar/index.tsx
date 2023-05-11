@@ -20,10 +20,9 @@ const NavBar: React.FC = () => {
   }
 }
 
-const UnauthenticatedNavBar = () => {
+const UnauthenticatedNavBar: React.FC = () => {
   const [t] = useTranslation(['common'])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   const themeContext = useContext(ThemeContext)
 
   return (

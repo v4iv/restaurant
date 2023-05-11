@@ -83,8 +83,8 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
           location: gpsLocation,
           ...data,
         })
-        // @ts-ignore
-        toggleEditModal()
+
+        toggleEditModal && toggleEditModal()
       } else {
         await createAddressMutation({
           name: data.name,
@@ -124,6 +124,9 @@ const AddressForm: React.FC<IAddressFormProps> = (props) => {
   const landmark = register('landmark', {required: false})
   const area = register('area', {required: true})
   const phone = register('phone', {required: true})
+
+  // Disable submit button if the form is not dirty
+  // const isSubmitDisabled = address && !isDirty
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

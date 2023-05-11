@@ -17,8 +17,7 @@ type FormValues = {
 
 const SignUpForm: React.FC = () => {
   const [t] = useTranslation(['common'])
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setLocation] = useLocation()
+  const [, setLocation] = useLocation()
   const {
     register,
     handleSubmit,

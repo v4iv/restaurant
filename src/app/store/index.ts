@@ -5,6 +5,7 @@ import {authApi} from '../services/auth.service'
 import {productApi} from '../services/products.service'
 import {orderApi} from '../services/order.service'
 import {addressApi} from '../services/address.service'
+import {kitchenApi} from '../services/kitchen.service'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [addressApi.reducerPath]: addressApi.reducer,
+    [kitchenApi.reducerPath]: kitchenApi.reducer,
   },
   middleware: (gDM) =>
     gDM().concat(
@@ -21,6 +23,7 @@ export const store = configureStore({
       orderApi.middleware,
       productApi.middleware,
       addressApi.middleware,
+      kitchenApi.middleware,
     ),
 })
 

@@ -58,9 +58,9 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.updateProfile.matchFulfilled,
       (state, {payload}) => {
-        state.user = payload.user
+        state.user = payload
         state.error = null
-        localStorage.setItem('user', JSON.stringify(payload.user))
+        localStorage.setItem('user', JSON.stringify(payload))
       },
     )
   },

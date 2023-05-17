@@ -18,7 +18,7 @@ const handler: Handler = async (
       case 'GET': {
         // Connect to FaunaDB
         const client = new Client({secret: process.env.FAUNADB_SECRET})
-        const id = event.path.split('/').pop()
+        const id = process.env.KITCHEN_SECRET
         const kitchenDocument: KitchenDocument = await client.query(
           q.Get(q.Ref(q.Collection('kitchen'), id)),
         )
@@ -40,6 +40,7 @@ const handler: Handler = async (
     }
   } catch (err) {
     console.error('/api/kitchen :', err)
+
     return {
       statusCode: 500,
       body: JSON.stringify({error: err.message}),

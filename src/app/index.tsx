@@ -11,7 +11,9 @@ import {
 } from 'gestalt'
 import ThemeContext from './contexts/theme.context'
 import NavBar from './components/NavBar'
+import Shutter from './components/Shutter'
 import AuthenticatedRoute from './components/AuthenticatedRoute'
+import {useGetKitchenQuery} from './services/kitchen.service'
 
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage'))
@@ -24,8 +26,9 @@ const SettingsPage = lazy(() => import('./pages/SettingsPage'))
 const PageNotFound = lazy(() => import('./pages/404'))
 
 const App: React.FC = () => {
-  const {t} = useTranslation(['common'])
+  const [t] = useTranslation(['common'])
   const [, navigate] = useLocation()
+  const {data, isLoading} = useGetKitchenQuery()
   const [theme, setTheme] =
     useState<ColorSchemeProviderProps['colorScheme']>('light')
 
@@ -62,6 +65,9 @@ const App: React.FC = () => {
           {/* @ts-ignore */}
           <OnLinkNavigationProvider onNavigation={useOnNavigation}>
             <Box color="default" minHeight="100vh">
+              {data?.kitchen && (
+                <Shutter isOpen={data.kitchen.isOpen} isLoading={isLoading} />
+              )}
               <Container>
                 <NavBar />
                 <Suspense

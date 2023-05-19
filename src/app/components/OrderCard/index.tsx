@@ -1,8 +1,8 @@
 import React from 'react'
+import {useTranslation} from 'react-i18next'
 import {Box, Button, Module, Table, Text} from 'gestalt'
 import {Product} from '../../types/product.types'
 import {Address} from '../../types/address.types'
-import {useTranslation} from 'react-i18next'
 
 interface IOrderCardProps {
   order: {
@@ -22,12 +22,12 @@ interface IOrderCardProps {
 }
 
 const OrderCard: React.FC<IOrderCardProps> = (props) => {
-  const [t] = useTranslation(['orderspage'])
+  const [t] = useTranslation(['orders'])
   const {order} = props
 
   const {id, status, products, total} = order
 
-  const statusText = t(`orderspage:${status}`)
+  const statusText = t(`orders:${status}`)
   const statusType = (type: string) => {
     switch (type) {
       case 'ORDER_RECEIVED':
